@@ -27,7 +27,7 @@ export const CommentsPageSection = ({videoId}: HomeViewProps) => {
   return (
        <ErrorBoundary 
        fallback={
-                <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-muted/40">
+                <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-transparent">
                     <div className="space-y-2">
                       <h3 className="text-xl font-medium">You're offline</h3>
                       <p className="text-muted-foreground max-w-md">

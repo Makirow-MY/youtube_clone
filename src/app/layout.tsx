@@ -30,8 +30,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <ClerkProvider afterSignOutUrl={"/"} >
-    <html lang="en" className={cn("font-sans", geist.variable)}>
+      <ClerkProvider 
+      signInUrl="/sign-in"
+      signUpUrl="/sign-up"
+      afterSignOutUrl={"/"} >
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
       <body
         className={`${inter.className}  antialiased`}
       >

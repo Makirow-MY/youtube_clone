@@ -366,7 +366,7 @@ const downloadWithProgress = async (url: string, filename: string) => {
 
           <DropdownMenuItem
             onClick={() => setIsShareOpen(true)}
-            className="cursor-pointer"
+            className="cursor-pointer text-nowrap py-2"
           >
             <Share2Icon className="mr-2 size-4" />
             Share
@@ -378,21 +378,21 @@ const downloadWithProgress = async (url: string, filename: string) => {
 
             <>
 
-              <DropdownMenuItem onClick={() => setIsDownloadOpen(true)} className="cursor-pointer">
+              <DropdownMenuItem onClick={() => setIsDownloadOpen(true)} className="cursor-pointer text-nowrap py-2">
                 <DownloadIcon className="mr-2 size-4" />
                 Download
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleWatchLater} className="cursor-pointer">
+              <DropdownMenuItem onClick={handleWatchLater} className="cursor-pointer text-nowrap py-2">
                 <BookmarkIcon className={`mr-2 size-4 ${isInWatchLater ? 'fill-black' : ''}`} />
                 {isInWatchLater ? 'Remove from watch later' : 'Save to watch later'}
               </DropdownMenuItem>
 
-              <DropdownMenuItem onClick={() => setIsPlaylistOpen(true)} className="cursor-pointer">
+              <DropdownMenuItem onClick={() => setIsPlaylistOpen(true)} className="cursor-pointer text-nowrap py-2">
                 <ListPlusIcon className="mr-2 size-4" />
                 Add to playlist
               </DropdownMenuItem>
 
-              <DropdownMenuItem onClick={() => setIsReportOpen(true)} className="cursor-pointer">
+              <DropdownMenuItem onClick={() => setIsReportOpen(true)} className="cursor-pointer text-nowrap py-2">
                 <FlagIcon className="mr-2 size-4" />
                 Report
               </DropdownMenuItem>
@@ -400,7 +400,7 @@ const downloadWithProgress = async (url: string, filename: string) => {
             </>}
 
           {onRemove && (
-            <DropdownMenuItem onClick={onRemove} className="cursor-pointer text-destructive focus:text-destructive">
+            <DropdownMenuItem onClick={onRemove} className="cursor-pointer py-2 text-destructive focus:text-destructive">
               <Trash2Icon className="mr-2 size-4" />
               Delete
             </DropdownMenuItem>

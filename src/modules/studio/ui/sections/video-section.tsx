@@ -8,13 +8,14 @@ import { DEFAULT_LIMIT } from "@/constants";
 import { SnakeCaseTitle } from "@/lib/utils";
 import { VideoThumnail } from "@/modules/videos/ui/components/video-thumbnail";
 import { useTRPC } from "@/trpc/client"
-import { WifiOff, RefreshCw } from "lucide-react";
+import { WifiOff, RefreshCw, PlayIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Globe2Icon, LockIcon } from "lucide-react";
 import Link from "next/link";
 import { Suspense, useMemo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useQueryClient, useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { StudioUploadModal } from "../../components/studio-upload-modal";
 
 
 export const VideoSection = () => {
@@ -22,7 +23,7 @@ export const VideoSection = () => {
   return (
     <ErrorBoundary
       fallbackRender={({ resetErrorBoundary }) => (
-        <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-muted/40">
+        <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-transparent">
           <WifiOff className="h-16 w-16 text-muted-foreground/70" strokeWidth={1.5} />
 
           <div className="space-y-2">
@@ -140,104 +141,119 @@ const VideoSectionSuspense = () => {
 
   const allVideos = videos.pages.flatMap((page) => page.items);
 
-  if (allVideos.length === 0) {
-    return (
-      <div className="border-y min-h-[50vh] flex flex-col items-center justify-center gap-4 py-20 text-center text-muted-foreground">
-        <div className="text-6xl opacity-40">🎥</div>
-        <h3 className="text-xl font-medium">No videos yet</h3>
-        <p>Upload your first video to see it here.</p>
+ if (allVideos.length === 0) {
+  return (
+    <div className="min-h-[70vh] flex flex-col items-center justify-center py-20 px-6 text-center">
+      {/* Large Illustration */}
+      <div className="relative mb-12">
+        <div className="w-52 h-52 bg-muted/50 rounded-3xl flex items-center justify-center">
+          <div className="text-[120px] opacity-75">🎬</div>
+        </div>
+        
+        {/* Decorative Elements */}
+        <div className="absolute -top-6 -right-6 bg-primary/10 text-primary rounded-2xl p-4 shadow-lg">
+          <PlayIcon className="w-12 h-12" />
+        </div>
       </div>
-    );
-  }
+
+      <h2 className="text-4xl font-semibold mb-4 tracking-tight">
+        No videos yet
+      </h2>
+      
+      <p className="text-muted-foreground text-xl max-w-md mb-10">
+        This is where your videos will appear once you upload them. 
+        Start sharing your content with the world!
+      </p>
+
+      
+<StudioUploadModal className={"rounded-full px-10 py-7 text-base font-medium shadow-md hover:shadow-lg transition-all"} />
+      <p className="text-xs text-muted-foreground mt-16">
+        Your videos are private until you publish them
+      </p>
+    </div>
+  );
+}
   return (
     <div>
-      <div className="border-y">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="pl-6" >Video</TableHead>
-              <TableHead>Visibility</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Date</TableHead>
+      <div className="border-y overflow-x-auto">
+        <table className="w-full min-w-[90vw] divide-y divide-border">
+          <thead className="bg-muted/50">
+            <tr>
+              <th className="pl-6 py-4 text-left text-sm font-medium w-full">Video</th>
+              <th className="px-4 py-4 text-left text-sm font-medium w-32">Visibility</th>
+              <th className="px-4 py-4 text-left text-sm font-medium w-28">Status</th>
+              <th className="px-4 py-4 text-left text-sm font-medium w-full">Date</th>
+              <th className="px-4 py-4 text-right text-sm font-medium w-24">Views</th>
+              <th className="px-4 py-4 text-right text-sm font-medium w-24">Comments</th>
+              <th className="px-4 py-4 text-right text-sm font-medium pr-6 w-24">Likes</th>
+            </tr>
+          </thead>
 
-              <TableHead className="text-right">Views</TableHead>
-              <TableHead className="text-right">Comments</TableHead>
-              <TableHead className="text-right pr-6">Likes</TableHead>
-            </TableRow>
-          </TableHeader>
+          <tbody className="divide-y divide-border">
+            {allVideos.map((video) => (
+              <tr 
+                key={video.id}
+                className="hover:bg-muted/50 transition-colors cursor-pointer group"
+                onClick={() => window.location.href = `/studio/videos/${video.id}`}
+              >
+                <td className="pl-6 py-4">
+                  <div className="flex items-center gap-4">
+                    <div className="relative aspect-video w-36 shrink-0 rounded-md overflow-hidden">
+                      <VideoThumnail 
+                        imageUrl={video.thumbnailUrl}
+                        title={video.title}
+                        isShort={video.videoType === "short"}
+                        duration={video.duration || 0}
+                        previewUrl={video.previewUrl} 
+                      />
+                    </div>
+                    <div className="flex flex-col overflow-hidden gap-y-1 min-w-0">
+                      <span className="text-sm line-clamp-2 font-medium group-hover:text-primary transition-colors">
+                        {video.title}
+                      </span>
+                      <span className="text-xs text-muted-foreground line-clamp-1">
+                        {video.description || "No description"}
+                      </span>
+                    </div>
+                  </div>
+                </td>
 
-          <TableBody>
-            {
-              allVideos.map((video) => (
-                <a href={`/studio/videos/${video.id}`} key={video.id} >
-                  <TableRow className="cursor-pointer">
-                    <TableCell className="pl-6">
-                      <div className="flex items-center gap-4 w-[510px]">
-                        <div className="relative aspect-video w-36 shrink-0">
-                          <VideoThumnail imageUrl={video.thumbnailUrl}
-                            title={video.title}
-                            isShort={video.videoType === "short"}
-                            duration={video.duration || 0}
-                            previewUrl={video.previewUrl} />
-                        </div>
-                        <div className="flex shrink-0 flex-col overflow-hidden gap-y-1">
-                          <span className="text-sm line-clamp-1">{video.title}</span>
-                          <span className="text-xs w-[150px] text-muted-foreground line-clamp-1">{"No description for this video yet"}</span>
-                        </div>
+                <td className="px-4 py-4">
+                  <div className="flex items-center gap-2 text-sm">
+                    {video.videoVisibility === "private" ? (
+                      <LockIcon className="size-4 text-muted-foreground" />
+                    ) : (
+                      <Globe2Icon className="size-4 text-muted-foreground" />
+                    )}
+                    <span>{SnakeCaseTitle(video.videoVisibility)}</span>
+                  </div>
+                </td>
 
-                      </div>
+                <td className="px-4 py-4 text-sm">
+                  {video.muxPlaybakId && video.muxAssetId 
+                    ? "Ready" 
+                    : SnakeCaseTitle(video.muxStatus || "processing")}
+                </td>
 
-                    </TableCell>
+                <td className="px-4 py-4 text-sm  text-nowrap text-muted-foreground">
+                  {format(new Date(video.createdAt), "d MMM yyyy")}
+                </td>
 
-                    <TableCell className="text-xs ml-auto">
-                      <div className="text-xs flex  items-center">
-                        {
-                          video.videoVisibility === "private" ?
-                            <LockIcon className="size-4 mr-2" />
-                            :
+                <td className="px-4 py-4 text-right text-sm font-medium">
+                  {new Intl.NumberFormat("en", { notation: "compact" }).format(video.viewCount)}
+                </td>
 
-                            <Globe2Icon className="size-4 mr-2" />
+                <td className="px-4 py-4 text-right text-sm">
+                  {video.CommentCount || 0}
+                </td>
 
-                        }
-                        {
-                          SnakeCaseTitle(video.videoVisibility)
-                        }
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-xs flex  items-center">
-                        {
-
-                          video.muxPlaybakId && video.muxAssetId ? "Ready" : SnakeCaseTitle(video.muxStatus || "error")}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-xs flex shrink-0 items-center truncate">
-                        {format(new Date(video.createdAt), "d MMM yyyy")}
-                      </div>
-
-                    </TableCell>
-                    <TableCell className="text-right text-sm">
-                      {new Intl.NumberFormat("en", {
-                        notation: "compact",
-                        //   compactDisplay: "short"
-                      }).format(video.viewCount)}
-                    </TableCell>
-                    <TableCell className="text-right text-sm">
-                      {video.CommentCount}
-                    </TableCell>
-                    <TableCell className="text-right text-sm pr-6">
-                      {new Intl.NumberFormat("en", {
-                        notation: "compact",
-                        //   compactDisplay: "short"
-                      }).format(video.likeCount)}
-                    </TableCell>
-                  </TableRow>
-                </a>
-              ))
-            }
-          </TableBody>
-        </Table>
+                <td className="px-4 py-4 text-right text-sm pr-6">
+                  {new Intl.NumberFormat("en", { notation: "compact" }).format(video.likeCount)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <InfiniteScroll
@@ -246,6 +262,5 @@ const VideoSectionSuspense = () => {
         fetchNextPage={query.fetchNextPage}
       />
     </div>
-  )
-
+  );
 }

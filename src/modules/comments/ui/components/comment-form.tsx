@@ -36,7 +36,7 @@ console.log("current user in comment form", user)
     resolver: zodResolver(commentInsertSchema),
     defaultValues: {
       videoId: videoId,
-      userId: user?.id || "",
+    //  userId: user.id,
       parentId: parentId,
       content: "",
     }
@@ -83,6 +83,8 @@ console.log("current user in comment form", user)
       toast.error("Comment content cannot be empty.");
       return;
     }
+     toast.error("Comment content cannot be empty.");
+     
     create.mutate(data);
   }
 
@@ -131,8 +133,12 @@ console.log("current user in comment form", user)
               disabled={create.isPending}
               type="submit"
               size="sm"
+              className="hover: bg-red-400"
+              onClick={() => {
+                toast.success("hello")
+              }}
             >
-              {variant === "reply" ? "Reply" : "Comment"}
+              {variant === "reply" ? "Leave a reply" : "Leave a comment"}
             </Button>
           </div>
         </div>

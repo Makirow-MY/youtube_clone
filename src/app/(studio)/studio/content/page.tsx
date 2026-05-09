@@ -1,5 +1,4 @@
 import { DEFAULT_LIMIT } from '@/constants';
-import StudioDashboardView from '@/modules/studio/ui/view/studio-dasbhboard-view';
 import { StudioView } from '@/modules/studio/ui/view/studio-view';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server'
 import React from 'react'
@@ -16,23 +15,12 @@ export default  async function Page () {
            { getNextPageParam: (lastPage) => lastPage.nextCursor },
          ),
        ),
-         prefetch(trpc.studio.getDashboardStats.queryOptions()),
-         
-         prefetch(trpc.studio.getTopVideos.queryOptions()),
-
-           prefetch(trpc.studio.getWeeklyAnalytics.queryOptions()),
-       
-          prefetch(trpc.studio.getRecentUploads.queryOptions({limit: 5})),
-         
-         prefetch(trpc.studio.getRecentSubscribers.queryOptions({limit: 5})),
-
-           prefetch(trpc.studio.getRecentComments.queryOptions({limit: 5}))
-       
+      
      ]);
 
   return (
     <HydrateClient>
-      <StudioDashboardView/>
+      <StudioView />
     </HydrateClient>
   )
 }

@@ -22,7 +22,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { DEFAULT_LIMIT } from "@/constants"
 
 
-export const StudioUploadModal = () => {
+export const StudioUploadModal = ({className}: {className?: string | null | undefined}) => {
    const trpc = useTRPC();
    const queryClient = useQueryClient();
     const router = useRouter()
@@ -96,12 +96,15 @@ export const StudioUploadModal = () => {
 
            
              <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                       {(!create.isPending || !createShort.isPending) && <Button variant="secondary"
+                    <DropdownMenuTrigger asChild={className ? false : true}>
+                       {(!create.isPending || !createShort.isPending) && <Button variant={!className ? "secondary" : "default"}
                 disabled={false}
+                onClick={() => className && create.mutate()} 
+                className={ (className && className?.trim() ) ? className : "py-3"}
             >
-                <PlusIcon />
-                Create
+                {!className  && <><PlusIcon />
+                Create</> }
+                {className && "Upload Your First Video"}
             </Button>}
                     </DropdownMenuTrigger>
             

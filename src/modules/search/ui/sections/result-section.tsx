@@ -27,7 +27,7 @@ export  const ResultSection  = ({query, categoryId }: SearchViewProps) => {
  } >
         <ErrorBoundary 
         fallbackRender={({ resetErrorBoundary }) => (
-                  <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-muted/40">
+                  <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-transparent">
                     <WifiOff className="h-16 w-16 text-muted-foreground/70" strokeWidth={1.5} />
                     
                     <div className="space-y-2">

@@ -1,5 +1,5 @@
 "use client"
-import { Suspense } from "react";
+import { Suspense, useMemo } from "react";
 import { CategoriesSectionn } from "../sections/categories-section";
 import { ErrorBoundary } from "react-error-boundary";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ export const HomeVideosSection = ({ categoryId, categoryType, limit }: HomeVideo
 
     <ErrorBoundary
       fallbackRender={({ resetErrorBoundary }) => (
-        <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-muted/40">
+        <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-transparent">
           <WifiOff className="h-16 w-16 text-muted-foreground/70" strokeWidth={1.5} />
 
           <div className="space-y-2">
@@ -101,16 +101,24 @@ export const HomeVideosSectionSuspense = ({ categoryId, categoryType, limit }: H
   );
 
   const shorts = videosQuery.data.pages.flatMap((p) => p.items);
+
+   const infiniteShorts = shorts || [];
+   
+    const shortsList = useMemo(() => {
+     
+      return [...infiniteShorts];
+    }, [infiniteShorts, videosQuery.data]);
+
   console.log(shorts)
 
-  if (shorts.length === 0) return <div className="flex items-center justify-center gap-3">
+  if (shortsList.length === 0) return <div className="flex items-center justify-center gap-3">
     <p>No Video Found</p>
   </div>;
 
   return (
     <div>
         {
-        shorts.filter((short) => short.videoType === "short").length > 0 && 
+        shortsList.filter((short) => short.videoType === "short").length > 0 && 
         <>
         <div className="flex items-center gap-3">
                 <ZapIcon className="size-5 fill-red-500 text-red-500" />

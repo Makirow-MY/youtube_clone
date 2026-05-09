@@ -60,7 +60,7 @@ export function FormSection({ videoId }: FormProps) {
     return (
        
             <ErrorBoundary fallbackRender={({ resetErrorBoundary }) => (
-                <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-muted/40">
+                <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-transparent">
                     <Button onClick={resetErrorBoundary} variant="outline" className="gap-2">
                         <RefreshCwIcon className="h-4 w-4" />
                         Retry
@@ -126,7 +126,7 @@ export function FormSectionSkeleton() {
         {/* Right column - video preview + metadata */}
         <div className="lg:col-span-2 space-y-8">
           {/* Video player area + card */}
-          <div className="rounded-xl overflow-hidden border bg-muted/40">
+          <div className="rounded-xl overflow-hidden border bg-transparent">
             {/* Video preview */}
             <Skeleton className="aspect-video w-full rounded-t-xl" />
 
@@ -729,7 +729,7 @@ export function FormSectionSuspense({ videoId }: FormProps) {
 //     <Suspense fallback={<FormSectionSkeleton />}>
 //       <ErrorBoundary
 //         fallbackRender={({ resetErrorBoundary }) => (
-//           <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-muted/40">
+//           <div className="min-h-[50vh] flex flex-col items-center justify-center gap-6 p-8 text-center border-y bg-transparent">
 //             <WifiOff className="h-16 w-16 text-muted-foreground/70" strokeWidth={1.5} />
 
 //             <div className="space-y-2">
@@ -818,7 +818,7 @@ export function FormSectionSuspense({ videoId }: FormProps) {
 //         {/* Right column - video preview + metadata */}
 //         <div className="lg:col-span-2 space-y-8">
 //           {/* Video player area + card */}
-//           <div className="rounded-xl overflow-hidden border bg-muted/40">
+//           <div className="rounded-xl overflow-hidden border bg-transparent">
 //             {/* Video preview */}
 //             <Skeleton className="aspect-video w-full rounded-t-xl" />
 

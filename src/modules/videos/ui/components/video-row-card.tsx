@@ -142,7 +142,7 @@ export const VideoRowCard = ({ data, size = "default", playlistId, videoId, onRe
                         {
                             size === "default" && (
                                 <p className="text-xs text-muted-foreground mt-1">
-                                    {compctViews} views • {compctLikes} likes •  {formatDistanceToNow(data.createdAt, { addSuffix: true })}
+                                    {compctViews} views •  {formatDistanceToNow(data.createdAt, { addSuffix: true })}
                                 </p>
                             )
                         }
@@ -177,7 +177,7 @@ export const VideoRowCard = ({ data, size = "default", playlistId, videoId, onRe
                         {
                             size === "compact" && (
                                 <p className="text-xs text-muted-foreground mt-1">
-                                    {compctViews} views • {compctLikes} likes •  {formatDistanceToNow(data.createdAt, { addSuffix: true })}
+                                    {compctViews} views •  {formatDistanceToNow(data.createdAt, { addSuffix: true })}
                                 </p>
                             )
                         }

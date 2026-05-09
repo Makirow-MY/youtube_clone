@@ -82,7 +82,7 @@ export function VideoReactions({ videoId, likes, dislikes, viewerReaction }: Vid
      disabled={like.isPending || dislike.isPending}
      variant={"secondary"} className="rounded-l-full rounded-r-none pr-4 gap-2">
         <ThumbsUpIcon className={cn("size-5",
-            viewerReaction === "like" && "fill-black"
+            viewerReaction === "like" && "fill-primary"
         )} />
         {likes}
      </Button>
@@ -92,7 +92,7 @@ export function VideoReactions({ videoId, likes, dislikes, viewerReaction }: Vid
      disabled={like.isPending || dislike.isPending}
      variant={"secondary"} className="rounded-l-none rounded-r-full pl-3">
         <ThumbsDownIcon className={cn("size-5",
-            viewerReaction === "dislike" && "fill-black"
+            viewerReaction === "dislike" && "fill-primary"
         )} />
         {dislikes}
      </Button>
