@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { CategoriesSectionn } from "./categories-section";
 import { ErrorBoundary } from "react-error-boundary";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, WifiOff } from "lucide-react";
+import { PlaySquareIcon, RefreshCw, UserCircleIcon, WifiOff } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { DEFAULT_LIMIT } from "@/constants";
 import { useTRPC } from "@/trpc/client";
@@ -72,6 +72,39 @@ export const SubscriptionsVideosSectionSuspense = () => {
   } 
  ))
  const videos = query.data
+if (videos.pages.flatMap((p) => p.items).length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] py-16 px-6 text-center">
+        <div className="relative mb-8">
+          <div className="w-32 h-32 rounded-full bg-muted/50 flex items-center justify-center">
+            <PlaySquareIcon className="w-20 h-20 text-muted-foreground/60" strokeWidth={1.2} />
+          </div>
+          <div className="absolute -top-2 -right-2 bg-background border rounded-full p-2 shadow">
+            <UserCircleIcon className="w-10 h-10 text-muted-foreground" />
+          </div>
+        </div>
+
+        <h2 className="text-3xl font-semibold mb-3">No Subscriptions Yet</h2>
+        
+        <p className="text-muted-foreground max-w-md text-lg mb-10">
+          You haven't subscribed to any channels yet. 
+          Subscribe to your favorite creators to see their latest videos here.
+        </p>
+
+        <Button 
+          size="lg" 
+          className="rounded-full px-8 py-6 text-base font-medium"
+          onClick={() => window.location.href = '/'} // or your browse page
+        >
+          Browse Channels
+        </Button>
+
+        <p className="text-xs text-muted-foreground mt-10">
+          Discover amazing content from creators around the world
+        </p>
+      </div>
+    );
+  }
 
     return (
    <div>

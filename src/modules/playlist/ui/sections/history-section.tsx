@@ -5,7 +5,7 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, WifiOff, Search, Trash2, Pause, Settings } from "lucide-react";
+import { RefreshCw, WifiOff, Search, Trash2, Pause, Settings, HistoryIcon, Clock } from "lucide-react";
 import { useState } from "react";
 import { useTRPC } from "@/trpc/client";
 import { VideoRowCard, VideoRowCardSkeleton } from "@/modules/videos/ui/components/video-row-card";
@@ -114,9 +114,10 @@ const videosQuery = useSuspenseInfiniteQuery(
   const groupedVideos = groupVideosByDate(allVideos, searchQuery);
 
   return (
-    <div className="flex flex-col-reverse lg:flex-row gap-8">
+    <>
+    {allVideos.length > 0 && <div className="flex flex-col-reverse lg:flex-row gap-8">
       {/* Main Content Area */}
-      <div className="flex-1 min-w-0">
+     <div className="flex-1 min-w-0">
        
         <HistoryGroups 
           groupedVideos={groupedVideos} 
@@ -142,12 +143,44 @@ const videosQuery = useSuspenseInfiniteQuery(
           isFetchingNextPage={videosQuery.isFetchingNextPage}
         />
       </div>
-
-      {/* Right Sidebar - YouTube Style Actions */}
+       {/* Right Sidebar - YouTube Style Actions */}
       <div className="w-full lg:w-80 flex-shrink-0">
         <HistoryRightSidebar  searchQuery={searchQuery} 
           onSearchChange={setSearchQuery}  />
       </div>
     </div>
+  }
+ {
+  allVideos.length === 0 && (
+    <div className="flex flex-col items-center justify-center min-h-[70vh] py-20 px-6 text-center">
+      <div className="relative mb-10">
+        <div className="w-40 h-40 rounded-full bg-muted/60 flex items-center justify-center">
+          <HistoryIcon className="w-28 h-28 text-muted-foreground/50" strokeWidth={1.1} />
+        </div>
+        <div className="absolute -bottom-2 -right-2 bg-background p-3 rounded-full shadow-lg border">
+          <Clock className="w-10 h-10 text-muted-foreground" />
+        </div>
+      </div>
+
+      <h2 className="text-3xl font-semibold mb-3">No watch history yet</h2>
+      <p className="text-muted-foreground max-w-md text-lg mb-10">
+        Videos you watch will appear here. Start exploring and building your history!
+      </p>
+
+      <Button 
+        size="lg" 
+        className="rounded-full px-10 py-6 text-base font-medium"
+        onClick={() => window.location.href = '/'}
+      >
+        Browse Videos
+      </Button>
+
+      <p className="text-xs text-muted-foreground mt-12">
+        Your watch history is private to you
+      </p>
+    </div>
+  )
+}
+</>
   );
 };

@@ -70,7 +70,7 @@ useEffect(()=>{
             <Badge
             variant={!value ? "default" : "secondary"}
             onClick={() => onSelect(null)}
-            className="rounded-lg px-3 py-1 cursor-pointer text-sm whitespace-nowrap"
+            className="rounded-lg px-3 py-1 h-full cursor-pointer text-sm whitespace-nowrap"
             > <a href={`/`} className="w-full h-full">
                   All
                 </a> </Badge>
@@ -110,7 +110,7 @@ useEffect(()=>{
       </Carousel>
       <div 
          className={cn(
-            "absolute right-12 top-0 bottom-0 w-12 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none",
+            "absolute right-12 top-0 bottom-0 w-12 z-10 bg-gradient-to-l from-secondary to-transparent pointer-events-none",
             currentValue === count && "hidden"
           )}
         />

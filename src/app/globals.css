@@ -3,11 +3,7 @@
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
-nextjs-portal,
-[data-nextjs-toast],
-[data-nextjs-dialog-overlay] {
-  display: none !important;
-}
+
 
 @theme inline {
   --color-background: var(--background);
@@ -126,6 +122,12 @@ nextjs-portal,
   * {
     @apply border-border outline-ring/50;
   }
+  
+nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-dialog-overlay] {
+  display: none !important;
+}
   body {
     @apply bg-background text-foreground;
   }

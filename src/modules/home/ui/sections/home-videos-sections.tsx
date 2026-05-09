@@ -62,8 +62,7 @@ export const HomeVideosSection = ({ categoryId, categoryType, limit }: HomeVideo
               <ShortsSkeleton />
                <div className="flex items-center gap-2 mb-4">
                     <Skeleton className="h-6 w-24" />
-                    <Skeleton className="h-6 w-6 rounded-full" />
-                  </div>
+                 </div>
               <div className="gap-4 gap-y-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 xl:grid-cols-3" >
                 {
                   Array.from({ length: !isMobile ? limit || 3 : 5 }).map((_, index) =>
@@ -129,7 +128,6 @@ export const HomeVideosSectionSuspense = ({ categoryId, categoryType, limit }: H
       {shorts.filter((short) => short.videoType === "video").length > 0 &&
 <>
  <div className="flex items-center gap-3 pb-3">
-         <User2Icon className="size-5 fill-red-500  text-red-500" />
                         <h2 className="text-xl font-semibold">For You</h2>
                       </div>
 

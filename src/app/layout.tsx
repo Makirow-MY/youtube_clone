@@ -6,6 +6,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { ThemeProvider } from "next-themes";
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
@@ -37,7 +38,9 @@ export default function RootLayout({
        <TRPCReactProvider>
         <Toaster />
         <TooltipProvider>
-         {children} 
+         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
         </TooltipProvider>
         </TRPCReactProvider>
       </body>

@@ -25,6 +25,18 @@ export const videoRowCardVariants = cva("flex group min-w-0", {
     }
 });
 
+export const videoRowCardVariantsSke = cva("flex group min-w-0", {
+    variants: {
+        size: {
+            default: "gap-4 rounded-lg  p-2",
+            compact: "gap-2 rounded-lg p-1",
+            veryCompact: "gap-1 rounded-lg p-1"
+        }
+    },
+    defaultVariants: {
+        size: "default"
+    }
+});
 const thumbnailVariants = cva("relative flex-none", {
     variants: {
         size: {
@@ -49,7 +61,7 @@ interface VideoRowCardProps extends VariantProps<typeof videoRowCardVariants> {
 
 export const VideoRowCardSkeleton = ({ size = "default" }: { size?: "default" | "compact" | "veryCompact" }) => {
     return (
-        <div className={videoRowCardVariants({ size })}>
+        <div className={videoRowCardVariantsSke({ size })}>
             {/* Thumbnail Skeleton */}
             <div className={thumbnailVariants({ size })}>
                 <Skeleton className="w-full aspect-video rounded-xl" />

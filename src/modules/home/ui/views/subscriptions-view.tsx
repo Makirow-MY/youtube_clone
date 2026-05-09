@@ -10,7 +10,7 @@ export const SubscriptionView = () => {
       <div>
         <h1 className="text-2xl  font-bold">My Subscriptions</h1>
 
-        <p className="text-xs text-muted-foreground">Videos from your favorite creators</p>
+        <p className="text-xs text-muted-foreground mt-1">Videos from your favorite creators</p>
       </div>
        <SubscriptionsVideosSection />
     </div>

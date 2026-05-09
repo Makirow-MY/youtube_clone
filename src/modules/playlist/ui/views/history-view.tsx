@@ -6,7 +6,8 @@ export const HistoryView = () => {
 return(
       <div className="max-w-screen mx-auto mb-10 px-4 pt-2.5 flex flex-col gap-y-6 ">
         <div>
-         <h1 className="text-3xl font-bold mb-6">Watch history</h1>
+         <h1 className="text-3xl font-bold">Watch history</h1>
+         <p className="text-xs text-muted-foreground mt-1">All videos you have watched will appear here</p>
       </div>
            <HistorySection />
         </div>

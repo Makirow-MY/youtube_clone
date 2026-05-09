@@ -3,7 +3,7 @@
 import { Suspense, useState, useMemo, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, WifiOff, Play, Search, Trash2 } from "lucide-react";
+import { RefreshCw, WifiOff, Play, Search, Trash2, ThumbsUpIcon, HeartIcon } from "lucide-react";
 import {  useTRPC } from "@/trpc/client";
 import { VideoRowCard, VideoRowCardSkeleton } from "@/modules/videos/ui/components/video-row-card";
 import { VideoGridCard, VideoGridCardSkeleton } from "@/modules/videos/ui/components/video-grid-card";
@@ -149,7 +149,8 @@ useEffect(()=>{
     }
 
   return (
-    <div className="flex h-screen overflow-hidden relative flex-col p-2 lg:flex-row gap-8">
+    <>
+   {filteredVideos.length > 0 && <div className="flex h-screen overflow-hidden relative flex-col p-2 lg:flex-row gap-8">
       {/* LEFT SIDEBAR - Big Thumbnail + Info (YouTube Style) */}
       <div className=" lg:w-80 flex-shrink-0">
         <LikedSidebar latestVideo={latestLikedVideo} totalCount={latestLikedVideo?.videoCount ?? 0} />
@@ -257,6 +258,37 @@ useEffect(()=>{
       <div className="w-full lg:w-72 flex-shrink-0">
         <LikedRightActions />
       </div> */}
+    </div>}
+ {filteredVideos.length === 0 &&
+    <div className="flex flex-col items-center justify-center min-h-[70vh] py-20 px-6 text-center">
+      <div className="relative mb-10">
+        <div className="w-40 h-40 rounded-full bg-muted/60 flex items-center justify-center">
+          <ThumbsUpIcon className="w-28 h-28 text-muted-foreground/40" strokeWidth={1.2} />
+        </div>
+        <div className="absolute -bottom-2 -right-2 bg-red-500 p-3 rounded-full shadow-lg border">
+                 <HeartIcon className="w-10 h-10 text-muted-foreground" />
+               </div>
+      </div>
+
+      <h2 className="text-3xl font-semibold mb-3">No liked videos yet</h2>
+      <p className="text-muted-foreground max-w-md text-lg mb-10">
+        Videos you like will appear here. Like videos you enjoy to save them for later.
+      </p>
+
+      <Button 
+        size="lg" 
+        className="rounded-full px-10 py-6 text-base font-medium"
+        onClick={() => window.location.href = '/'}
+      >
+        Explore Videos
+      </Button>
+
+      <p className="text-xs text-muted-foreground mt-12 opacity-75">
+        Liked videos are only visible to you
+      </p>
     </div>
+ 
+}
+    </>
   );
 };

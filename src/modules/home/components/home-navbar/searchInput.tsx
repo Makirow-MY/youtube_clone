@@ -90,14 +90,14 @@ console.log("Suggestions:", suggestions);
           )}
         </div>
 
-        <Button type="submit" variant="secondary" className="rounded-r-full py-6  px-6">
+        <Button type="submit" variant="secondary" className="rounded-r-full py-5  px-6">
           <SearchIcon className="size-5" />
         </Button>
       </form>
 
       {/* Suggestions Dropdown */}
      {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute top-full mt-1 w-full bg-white border rounded-xl shadow-xl z-50 max-h-[420px] overflow-auto">
+        <div className="absolute top-full mt-1 w-full bg-primary-foreground border rounded-xl shadow-xl z-50 max-h-[420px] overflow-auto">
           {suggestions.map((item: any, index: number) => (
             <div
               key={`${item.type}-${item.id}-${index}`}
@@ -105,10 +105,8 @@ console.log("Suggestions:", suggestions);
               className="flex items-center gap-3 px-4 py-3 hover:bg-muted cursor-pointer border-b last:border-b-0"
             >
               {item.type === 'video' && (
-                <img
-                  src={item.thumbnailUrl || THUMBNAIL_FALLBACK}
-                  alt={item.title}
-                  className="w-10 h-7 object-cover rounded"
+                <SearchIcon
+                  className="size-5 "
                 />
               )}
 
@@ -122,11 +120,8 @@ console.log("Suggestions:", suggestions);
               )}
 
               <div className="flex-1 min-w-0">
-                <p className="line-clamp-1 font-medium text-sm">{item.title}</p>
-                <p className="text-xs text-muted-foreground capitalize">
-                  {item.type}
-                  {item.viewCount ? ` • ${item.viewCount} views` : ''}
-                </p>
+                <p className="line-clamp-1 text-sm">{item.title}</p>
+                
               </div>
             </div>
           ))}

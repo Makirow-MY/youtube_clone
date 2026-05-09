@@ -29,18 +29,22 @@ export function Authbutton() {
 
            
             <Show when="signed-out">
-                {/* <SignInButton  mode='modal' /> */}
+                <SignInButton   mode='modal' >
                 <SignUpButton>
                     <Button
                         variant="outline"
-                        className="px-4 py-2 text-sm cursor-pointer text-blue-600 hover:text-blue-500 border-blue-500/20 rounded-full shadow-none flex items-center gap-2"
+                       className="p-4 text-sm cursor-pointer rounded-full shadow-none flex items-center gap-2"
                     >
-                        <UserCircleIcon className="w-5 h-5" />
+                        <UserCircleIcon className="size-5" />
                         Sign in
                     </Button>
                 </SignUpButton>
+                </SignInButton>
             </Show>
 
         </>
     );
 }
+
+
+

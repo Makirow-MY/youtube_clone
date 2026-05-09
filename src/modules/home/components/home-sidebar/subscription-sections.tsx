@@ -167,9 +167,10 @@ const subscriptions = subscriptionsQ.data;
                         subscriptions.map((channel) => (
                             <SidebarMenuItem key={channel.user.id}>
                                 <SidebarMenuButton
+                                
                                     tooltip={channel.user.name}
                                     asChild
-                                    className="hover:bg-sidebar-accent"
+                                    className="py-6 hover:bg-sidebar-accent"
                                 >
                                     <a
                                         href={`/users/${channel.user.name}`}
