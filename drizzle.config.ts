@@ -8,6 +8,7 @@
     out: "./drizzle",
     dialect: "postgresql",
     dbCredentials: {
-        url: "postgresql://postgres:Makiapassword123.@localhost:5433/postgres"
+        url: process.env.DATABASE_URL!,
+        //"postgresql://postgres:Makiapassword123.@localhost:5433/postgres"
     }
  })
