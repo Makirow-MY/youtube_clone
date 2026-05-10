@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { ThemeProvider } from "next-themes";
+import { APP_URL } from "@/constants";
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
@@ -31,6 +32,7 @@ export default function RootLayout({
 }>) {
   return (
       <ClerkProvider 
+      domain={APP_URL}
       signInUrl="/sign-in"
       signUpUrl="/sign-up"
       afterSignOutUrl={"/"} >
