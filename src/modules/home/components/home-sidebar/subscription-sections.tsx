@@ -96,7 +96,8 @@ const router = useRouter();
                                      </SidebarMenuItem>
                                   ))}
                                   
-                                  { isCollapsed && <SidebarMenuItem key={items[0].title}>
+                                  { 
+             isCollapsed && <SidebarMenuItem key={items[0].title}>
                     <SidebarMenuButton
                     tooltip={items[0].title}
                     asChild
@@ -108,7 +109,9 @@ const router = useRouter();
                           return clerk.openSignIn();
                         }
                     }} // add navigation logic here
-                    > 
+                    > <Button variant={"ghost"} size={"icon"} className="flex items-center gap-4 hover:bg-secondary">
+                                    <PlaySquareIcon style={{height: "20px", width: "20px"}} />                           
+                                  </Button>
                         <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                <Button variant={"ghost"} size={"icon"} className="flex items-center gap-4 hover:bg-secondary">
