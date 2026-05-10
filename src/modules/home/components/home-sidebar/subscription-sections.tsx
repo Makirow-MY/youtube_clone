@@ -68,7 +68,7 @@ const router = useRouter();
       const { state } = useSidebar();   // Get current sidebar state
 
   const isCollapsed = state === "collapsed";
-  if(subscriptions.length === 0) return null
+  if(subscriptions.length === 0 || !isSignedIn ) return null
     return (
         <SidebarGroup>
              <SidebarGroupContent>

@@ -78,7 +78,7 @@ getMany: protectedProcedure
     const {id: clerkUserId} = ctx.user;
 
     if (!clerkUserId) {
-      throw new TRPCError({code: "UNAUTHORIZED"})
+      return []
     }
 
   
