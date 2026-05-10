@@ -171,7 +171,7 @@ export const HomeVideosSectionSuspense = ({ categoryId, categoryType, limit }: H
       }
       {shorts.filter((short) => short.videoType === "video").length > 0 &&
 <>
- <div className="flex items-center gap-3 pb-3">
+ <div className="flex items-center gap-3 py-3">
                         <h2 className="text-xl font-semibold">For You</h2>
                       </div>
 

@@ -113,7 +113,7 @@ const queryClient = useQueryClient();
            <a href={`/users/${comments.userId}`}>
            <UserAvatar
            size={variant === "comment" ? "lg" : "sm"}
-           imageUrl={comments.user?.imageUrl || `https://ui-avatars.com/api/?name=${comments.user.name}&background=random`}
+           imageUrl={comments.user?.imageUrl || `https://ui-avatars.com/api/?name=${comments.user.name || "Unknown User"}&background=random`}
            name={comments.user.name}
            /></a>
            <div className="flex-1 min-w-0">

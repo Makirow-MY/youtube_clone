@@ -93,7 +93,7 @@ export const CommentForm = ({
       <form onSubmit={form.handleSubmit(handleSubmit)} className="flex gap-4 group">
         <UserAvatar
           size="lg"
-          imageUrl={user?.imageUrl || `https://ui-avatars.com/api/?name=&background=random`}
+          imageUrl={user?.imageUrl || `https://ui-avatars.com/api/?name=Unknown User&background=random&color=#fff`}
           name={user?.username || 'User'}
         />
 

@@ -20,7 +20,7 @@ export const ShortsGridCard = ({ data }: ShortsGridCardProps) => {
   return (
     <div className="flex flex-col w-full gap-2 group">
       <a href={`/shorts/${data.id}`}>
-        <div className="relative aspect-[9/16]">
+        <div className="relative ">
           <VideoThumnail
             imageUrl={data.thumbnailUrl}
             previewUrl={data.previewUrl}
