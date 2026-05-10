@@ -2,7 +2,7 @@ import { db } from "@/db";
 import { Subscriptions, users, videos, videosViews, videoUpdateSchema } from "@/db/schema";
 import { z } from "zod";
 import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
-import { eq, and, or, lt, desc, getTableColumns, exists } from "drizzle-orm";
+import { eq, and, or, lt, desc, getTableColumns, exists, inArray } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 import { mux } from "@/lib/mux";
 import { UploadThingError, UTApi } from "uploadthing/server";
@@ -73,15 +73,25 @@ export const subscriptionRouter = createTRPCRouter({
         }),
 // Add this inside your subscriptionsRouter = createTRPCRouter({ ... })
 
-getMany: protectedProcedure
+getMany: baseProcedure
   .query(async ({ ctx }) => {
-    const {id: clerkUserId} = ctx.user;
+    const {clerkUserId} = ctx;
 
     if (!clerkUserId) {
       return []
     }
+    let userId;
+              
 
+                const[user] = await db.select().from(users).where(inArray(users.clerkId, clerkUserId ? [clerkUserId] : []))
+
+                if(user) {
+                    userId = user.id;
+                }
   
+     if (!userId) {
+      return []
+    } 
     const data = await db
       .select({
         ...getTableColumns(Subscriptions),
@@ -89,7 +99,7 @@ getMany: protectedProcedure
       })
       .from(Subscriptions)
       .innerJoin(users, eq(Subscriptions.creatorId, users.id))
-      .where(eq(Subscriptions.viewerId, clerkUserId))
+      .where(eq(Subscriptions.viewerId, userId))
       .orderBy(desc(Subscriptions.createdAt)) // Most recently subscribed first
       .limit(20); // YouTube usually shows ~7-10, but we fetch more for safety
 
