@@ -31,6 +31,8 @@ export const videosViewsRouter = createTRPCRouter({
 
                 }
 
+   const [exitingVideo] = await db.select().from(videos)
+                    .where( eq(videos.id, videoId))
 
                 const [exitingVideoViews] = await db.select().from(videosViews)
                     .where(and(
@@ -99,6 +101,9 @@ export const videosViewsRouter = createTRPCRouter({
                     userId,
                     videoId,
                 }).returning()
+                  const audienceService = new AudienceAnalysisService();
+                  await audienceService.updateVideoAudiences({ videoId: videoId, video: exitingVideo });
+                
                 return newVideoView;
 
             }
