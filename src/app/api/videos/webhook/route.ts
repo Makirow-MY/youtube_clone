@@ -3,8 +3,12 @@ import { db } from "@/db"
 import { videos } from "@/db/schema"
 import { mux } from "@/lib/mux"
 import {
-    VideoAssetCreatedWebhookEvent, VideoAssetDeletedWebhookEvent, VideoAssetErroredWebhookEvent, VideoAssetReadyWebhookEvent, VideoAssetTrackReadyWebhookEvent, VideoAssetUpdatedWebhookEvent
-
+    VideoAssetCreatedWebhookEvent, 
+    VideoAssetDeletedWebhookEvent,
+     VideoAssetErroredWebhookEvent,
+      VideoAssetReadyWebhookEvent,
+       VideoAssetTrackReadyWebhookEvent, 
+       VideoAssetUpdatedWebhookEvent
 } from "@mux/mux-node/resources/webhooks"
 import { eq } from "drizzle-orm"
 import { headers } from "next/headers"

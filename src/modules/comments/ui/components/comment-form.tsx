@@ -31,17 +31,17 @@ export const CommentForm = ({
   const trpc = useTRPC();
   const clerk = useClerk();
   const queryClient = useQueryClient();
-console.log("current user in comment form", user)
+
   const form = useForm<z.infer<typeof commentInsertSchema>>({
     resolver: zodResolver(commentInsertSchema),
     defaultValues: {
       videoId: videoId,
-    //  userId: user.id,
+      userId: user  ? user?.id : "",
       parentId: parentId,
       content: "",
     }
   });
-
+  console.log("current user in comment form", user, form)
   const create = useMutation(
     trpc.comments.create.mutationOptions({
       onSuccess: () => {
@@ -83,8 +83,8 @@ console.log("current user in comment form", user)
       toast.error("Comment content cannot be empty.");
       return;
     }
-     toast.error("Comment content cannot be empty.");
-     
+    toast.error("Comment content cannot be empty.");
+
     create.mutate(data);
   }
 
