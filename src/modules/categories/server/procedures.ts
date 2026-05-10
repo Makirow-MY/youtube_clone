@@ -29,6 +29,6 @@ const {categoryId} = input
             topicName,
         }))
       const filterfITER =  groupedData.sort(() => Math.random() - 0.5)
-      return filterfITER.slice(0, 10);
+      return filterfITER.length > 0 ? filterfITER.slice(0, 10) : [];
     })
 })

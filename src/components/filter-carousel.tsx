@@ -30,34 +30,36 @@ export const FilterCarousel = ({
   data,
   isLoading,
 }: FilterProps) => {
-    const [api, setApi] = useState<CarouselApi>();
-    const [currentValue, setCurrentValue] = useState(0); 
-    const [count, setCount] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+  const [currentValue, setCurrentValue] = useState(0);
+  const [count, setCount] = useState(0);
 
-useEffect(()=>{
+  useEffect(() => {
     if (!api) {
-        return;
-            }
+      return;
+    }
 
     setCount(api.scrollSnapList().length)
-    setCurrentValue(api.selectedScrollSnap() + 1 )
+    setCurrentValue(api.selectedScrollSnap() + 1)
 
     api.on("select", () => {
-        setCurrentValue(api.selectedScrollSnap() + 1)
-    } 
-)  
-}, [api])
-   // console.log("rendering filter carousel with value:", isLoading, value);
+      setCurrentValue(api.selectedScrollSnap() + 1)
+    }
+    )
+  }, [api])
+  // console.log("rendering filter carousel with value:", isLoading, value);
   return (
-    <div className="relative w-full">
-        <div 
-         className={cn(
-            "absolute left-12 top-0 bottom-0 w-12 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none"
-         , currentValue === 1 && "hidden"  
+    <>
+    { !isLoading && data.length > 0 && 
+<div className="relative w-full">
+      <div
+        className={cn(
+          "absolute left-12 top-0 bottom-0 w-12 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none"
+          , currentValue === 1 && "hidden"
         )}
-        />
+      />
       <Carousel
-      setApi={setApi}
+        setApi={setApi}
         opts={{
           align: "start",
           dragFree: true,
@@ -65,55 +67,80 @@ useEffect(()=>{
         className="w-full px-12"
       >
         <CarouselContent className="-ml-3">
-    {!isLoading &&  (
           <CarouselItem className="pl-3 basis-auto">
             <Badge
-            variant={!value ? "default" : "secondary"}
-            onClick={() => onSelect(null)}
-            className="rounded-lg px-3 py-1 h-full cursor-pointer text-sm whitespace-nowrap"
+              variant={!value ? "default" : "secondary"}
+              onClick={() => onSelect(null)}
+              className="rounded-lg px-3 py-1 h-full cursor-pointer text-sm whitespace-nowrap"
             > <a href={`/`} className="w-full h-full">
-                  All
-                </a> </Badge>
-          </CarouselItem>)}
+                All
+              </a> </Badge>
+          </CarouselItem>
+          {data.map((item) => (
+            <CarouselItem key={item.value} className="pl-3 basis-auto">
+              <Badge
+                variant={value === item.value ? "default" : "secondary"}
+                onClick={() => onSelect(item.value)}
+                className="rounded-lg px-3 py-1 cursor-pointer text-sm whitespace-nowrap"
 
-            {
-              isLoading &&   Array.from({ length: 10 }).map((_, index) => (  
-                    <CarouselItem key={index} className="pl-3 basis-auto">
-                       <Skeleton className="h-full w-[100px] px-3 py-1 text-sm font-semibold  rounded-lg">
-                             &nbsp;
-                        </Skeleton>
-                    </CarouselItem>
-                 )) 
-            }
-          
-            {!isLoading && data.map((item) => (
-              <CarouselItem key={item.value} className="pl-3 basis-auto">
-                <Badge 
-                 variant={value === item.value ? "default" : "secondary"}
-                 onClick={() => onSelect(item.value)}
-                  className="rounded-lg px-3 py-1 cursor-pointer text-sm whitespace-nowrap"
-           
-                >
-                    <a href={`/?categoryId=${item.value}`} className="w-full h-full">
+              >
+                <a href={`/?categoryId=${item.value}`} className="w-full h-full">
                   {item.label}
                 </a>
-                </Badge>
-              </CarouselItem>
-            ))}
-          
-        </CarouselContent>
+              </Badge>
+            </CarouselItem>
+          ))}
 
-        {!isLoading && (
-            <><CarouselPrevious className="left-0 z-20"/> 
-          <CarouselNext className="right-0 z-20" />
-          </>)}
+        </CarouselContent>
+        <CarouselPrevious className="left-0 z-20" />
+        <CarouselNext className="right-0 z-20" />
+
       </Carousel>
-      <div 
-         className={cn(
-            "absolute right-12 top-0 bottom-0 w-12 z-10 bg-gradient-to-l from-secondary to-transparent pointer-events-none",
-            currentValue === count && "hidden"
-          )}
-        />
+      <div
+        className={cn(
+          "absolute right-12 top-0 bottom-0 w-12 z-10 bg-gradient-to-l from-secondary to-transparent pointer-events-none",
+          currentValue === count && "hidden"
+        )}
+      />
     </div>
+    }
+     {isLoading && data.length === 0 && 
+<div className="relative w-full">
+      <div
+        className={cn(
+          "absolute left-12 top-0 bottom-0 w-12 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none"
+          , currentValue === 1 && "hidden"
+        )}
+      />
+       <Carousel
+        setApi={setApi}
+        opts={{
+          align: "start",
+          dragFree: true,
+        }}
+        className="w-full px-12"
+      >
+        <CarouselContent className="-ml-3">
+          {
+            isLoading && Array.from({ length: 10 }).map((_, index) => (
+              <CarouselItem key={index} className="pl-3 basis-auto">
+                <Skeleton className="h-full w-[100px] px-3 py-1 text-sm font-semibold  rounded-lg">
+                  &nbsp;
+                </Skeleton>
+              </CarouselItem>
+            ))
+          }
+  </CarouselContent>
+      </Carousel>
+      <div
+        className={cn(
+          "absolute right-12 top-0 bottom-0 w-12 z-10 bg-gradient-to-l from-secondary to-transparent pointer-events-none",
+          currentValue === count && "hidden"
+        )}
+      />
+    </div>
+    }
+    </>
+    
   );
 };

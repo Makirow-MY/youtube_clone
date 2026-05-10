@@ -53,5 +53,5 @@ const categories = useSuspenseQuery(
   }
 
 
-  return <FilterCarousel onSelect={onSelect} value={categoryId} data={data} />;
+  return <FilterCarousel onSelect={onSelect} value={categoryId} data={data || []} />;
 }
