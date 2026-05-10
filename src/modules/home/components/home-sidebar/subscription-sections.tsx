@@ -66,6 +66,7 @@ const router = useRouter();
       const { state } = useSidebar();   // Get current sidebar state
 
   const isCollapsed = state === "collapsed";
+  if(subscriptions.length === 0) return null
     return (
         <SidebarGroup>
              <SidebarGroupContent>
@@ -92,6 +93,7 @@ const router = useRouter();
                                       </SidebarMenuButton>
                                      </SidebarMenuItem>
                                   ))}
+                                  
                     {subscriptions.length > 0 ? (
                         subscriptions.map((channel) => (
                             <SidebarMenuItem key={channel.user.id}>
