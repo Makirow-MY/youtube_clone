@@ -1,3 +1,4 @@
+import { APP_URL } from "@/constants";
 import { Client } from "@upstash/workflow";
 
 const workflow = new Client({
@@ -6,7 +7,7 @@ const workflow = new Client({
  })
 
 const { workflowRunId } = await  workflow.trigger({
-  url: `http://localhost:3000/api/videos/workflow/title`,
+  url: `${APP_URL}/api/videos/workflow/title`,
   retries: 3
 });
 
