@@ -20,12 +20,6 @@ const items = [
         url: "/shorts",
         icon: ZapIcon ,
     },
-   {
-        title:  "Subscriptions",
-        url: "/feed/subscriptions",
-        icon: PlaySquareIcon,
-        auth: true,
-    },
 ]
 
 export const MainSection = () => {
@@ -49,13 +43,7 @@ const router = useRouter();
                     key={item.title} 
                     className={`py-6 ${isCollapsed ? "p-[7em] mb-5" : ""}`}                    
                     isActive={ pathname  === item.url} // change to look on pathname
-                    onClick={(e) => {
-                        if(item.auth && !isSignedIn){
-                            e.preventDefault();
-                          return clerk.openSignIn();
-                        }
-                    }} // add navigation logic here
-                    > 
+                     > 
                         <a href={item.url} className="flex items-center gap-4">
                             <item.icon style={{height: "20px", width: "20px"}}  className={`${pathname  === item.url && "fill-accent-foreground"}`} />
                             <span className={`text-md ${pathname  === item.url && "font-semibold"}`}>{item.title}</span>
