@@ -3,7 +3,7 @@ import { Suspense, useMemo } from "react";
 import { CategoriesSectionn } from "../sections/categories-section";
 import { ErrorBoundary } from "react-error-boundary";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, User2Icon, WifiOff, ZapIcon } from "lucide-react";
+import { Clock, RefreshCw, User2Icon, VideoOffIcon, WifiOff, ZapIcon } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { DEFAULT_LIMIT } from "@/constants";
 import { useTRPC } from "@/trpc/client";
@@ -13,6 +13,7 @@ import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { ShortsSkeleton } from "./home-shorts-section";
 import { ShortsGridCard } from "../../components/shorts-grid";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useClerk, useUser } from "@clerk/nextjs";
 
 
 
@@ -25,6 +26,8 @@ interface HomeVideosSectionProps {
 
 export const HomeVideosSection = ({ categoryId, categoryType, limit }: HomeVideosSectionProps) => {
   const isMobile = useIsMobile()
+ 
+      
   return (
 
     <ErrorBoundary
@@ -85,6 +88,8 @@ export const HomeVideosSection = ({ categoryId, categoryType, limit }: HomeVideo
 export const HomeVideosSectionSuspense = ({ categoryId, categoryType, limit }: HomeVideosSectionProps) => {
   const isMobile = useIsMobile()
   const trpc = useTRPC();
+  const clerk = useClerk();
+    const { user } = useUser();
  //const myUserId =  window.localStorage.getItem("MyUserId")
 //console.log({myUserId})
   const videosQuery = useSuspenseInfiniteQuery(
@@ -111,9 +116,40 @@ export const HomeVideosSectionSuspense = ({ categoryId, categoryType, limit }: H
 
   console.log(shorts)
 
-  if (shortsList.length === 0) return <div className="flex items-center justify-center gap-3">
-    <p>No Video Found</p>
-  </div>;
+  if (shortsList.length === 0) return  <div className="flex flex-col items-center justify-center min-h-[70vh] py-20 px-6 text-center">
+        <div className="relative mb-10">
+          <div className="w-40 h-40 rounded-full bg-muted/60 flex items-center justify-center">
+            <VideoOffIcon className="w-28 h-28 text-muted-foreground/50" strokeWidth={1.1} />
+          </div>
+          <div className="absolute -bottom-2 -right-2 bg-background p-3 rounded-full shadow-lg border">
+            <Clock className="w-10 h-10 text-muted-foreground" />
+          </div>
+        </div>
+  
+        <h2 className="text-3xl font-semibold mb-3">No video found</h2>
+        <p className="text-muted-foreground max-w-md text-lg mb-10">
+          Videos you and other creator publish, will appear here. Start be the first to publish a video!
+        </p>
+  
+        <Button 
+          size="lg" 
+          className="rounded-full px-10 py-6 text-base font-medium"
+          onClick={() => {
+                if(user && user.id){
+                  window.location.href = '/studio/content';
+                }
+                else{
+                  clerk.openSignIn()
+                }
+          }}
+        >
+          Publish Video
+        </Button>
+  
+        <p className="text-xs text-muted-foreground mt-12">
+          Your publish videos will be visible to all
+        </p>
+      </div>;
 
   return (
     <div>
