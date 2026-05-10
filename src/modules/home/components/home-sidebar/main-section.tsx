@@ -12,7 +12,7 @@ const items = [
     {
         title:  "Home",
         url: "/",
-        icon:IoIosHome,
+        icon:HomeIcon,
     },
     
     {
@@ -45,7 +45,7 @@ const router = useRouter();
                     isActive={ pathname  === item.url} // change to look on pathname
                      > 
                         <a href={item.url} className="flex items-center gap-4">
-                            <item.icon style={{height: "20px", width: "20px"}}  className={`${pathname  === item.url && "fill-accent-foreground"}`} />
+                            <item.icon style={{height: "20px", width: "20px"}}  />
                             <span className={`text-md ${pathname  === item.url && "font-semibold"}`}>{item.title}</span>
                         </a>
                     </SidebarMenuButton>
@@ -63,16 +63,15 @@ const router = useRouter();
                             e.preventDefault();
                           return clerk.openSignIn();
                         }
-                    }} // add navigation logic here
+                    }} 
+                    isActive={ pathname  === "/playlist/liked" || pathname  === "/playlist" || pathname  === "/playlist/history"} // change to look on pathname
+                    
                     > 
-                        {/* <a href={"/"} className="flex items-center gap-4">
-                            <UserCircleIcon style={{height: "20px", width: "20px"}} 
-                            //className={`${pathname  === item.url && "fill-accent-foreground"}`} 
-                            />
-                        </a> */}
-                         <DropdownMenu>
+                        <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                  <Button variant={"ghost"} size={"icon"} className="flex items-center gap-4 hover:bg-secondary">
+                                  <Button 
+                                  
+                                  variant={"ghost"} size={"icon"} className="flex items-center gap-4 hover:bg-secondary">
                                     <UserCircleIcon style={{height: "20px", width: "20px"}} />                           
                                   </Button>
                                 </DropdownMenuTrigger>
@@ -87,14 +86,14 @@ const router = useRouter();
                                     My Page
                                   </DropdownMenuItem>
                                   <DropdownMenuItem
-                                    onClick={() => router.push(`/playlist/history`)}
+                                     onClick={() => router.push(`/playlist/history`)}
                                     className="cursor-pointer py-2"
                                   >
                                     <HistoryIcon className="mr-2"/>
                                     History
                                   </DropdownMenuItem>
                                   <DropdownMenuItem
-                                    onClick={() => router.push(`/playlist/like`)}
+                                    onClick={() => router.push(`/playlist/liked`)}
                                     className="cursor-pointer py-2"
                                   >
                                     <ThumbsUpIcon className="mr-2" />

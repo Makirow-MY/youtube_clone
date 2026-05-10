@@ -4,6 +4,7 @@ import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, Side
 import { FlameIcon, HistoryIcon, HomeIcon, ListVideoIcon, PlaySquareIcon, ThumbsUpIcon } from "lucide-react";
 import Link from "next/link";
 import {useClerk, useAuth} from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 const items = [
     {
@@ -31,7 +32,7 @@ export const   PersonalSection = () => {
         const clerk = useClerk();
         const {isSignedIn} = useAuth();
       const { state } = useSidebar();   // Get current sidebar state
-
+  const pathname = usePathname()
   const isCollapsed = state === "collapsed";
     return (
         <SidebarGroup>
@@ -48,8 +49,8 @@ export const   PersonalSection = () => {
                     asChild
                     className="py-6"  
                     key={item.title}
-                    isActive={false} // change to look on pathname
-                    onClick={(e) => { 
+                   isActive={ pathname  === item.url} // change to look on pathname
+                     onClick={(e) => { 
                          if(item.auth && !isSignedIn){
                             e.preventDefault();
                           return clerk.openSignIn();

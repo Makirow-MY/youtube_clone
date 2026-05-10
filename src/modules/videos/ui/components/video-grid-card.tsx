@@ -92,7 +92,7 @@ export const VideoGridCard = ({data, playlistId, onRemove}: VideoRowCardProps) =
                                        
                                         </a>
                                          <a  href={playlistId ? `/playlist/${playlistId}/${data.id}` : `/videos/${data.id}`}>
-                                    <p className="text-sm text-muted-foreground line-clamp-2">
+                                    <p className="text-xs text-muted-foreground line-clamp-2">
                                         {compctViews} views •  {formatDistanceToNow(data.createdAt, {addSuffix: true})}
                                     </p>
                                        
