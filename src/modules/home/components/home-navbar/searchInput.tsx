@@ -74,7 +74,7 @@ console.log("Suggestions:", suggestions);
             }}
             onFocus={() => setShowSuggestions(true)}
             placeholder="Search"
-            className="w-full rounded-l-full border text-sm pl-4 py-2  pr-12 focus:outline-none focus:border-blue-500"
+            className="w-full rounded-l-full bg-primary-foreground border text-sm pl-4 py-2  pr-12 focus:outline-none focus:border-blue-500"
           />
 
           {value && (

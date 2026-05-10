@@ -73,6 +73,7 @@ const router = useRouter();
         <SidebarGroup>
              <SidebarGroupContent>
                 <SidebarMenu>
+          
                              {!isCollapsed && items.map((item) => (
                                               <SidebarMenuItem key={item.title}>
                                       <SidebarMenuButton
@@ -96,69 +97,7 @@ const router = useRouter();
                                      </SidebarMenuItem>
                                   ))}
                                   
-                                  { 
-             isCollapsed && <SidebarMenuItem key={items[0].title}>
-                    <SidebarMenuButton
-                    tooltip={items[0].title}
-                    asChild
-                    key={items[0].title}
-                    className={`py-6 ${isCollapsed ? "p-[7em] mb-5 relative" : ""}`}                    
-                    onClick={(e) => {
-                        if(!isSignedIn){
-                            e.preventDefault();
-                          return clerk.openSignIn();
-                        }
-                    }} // add navigation logic here
-                    > <Button variant={"ghost"} size={"icon"} className="flex items-center gap-4 hover:bg-secondary">
-                                    <PlaySquareIcon style={{height: "20px", width: "20px"}} />                           
-                                  </Button>
-                        <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                               <Button variant={"ghost"} size={"icon"} className="flex items-center gap-4 hover:bg-secondary">
-                                    <PlaySquareIcon style={{height: "20px", width: "20px"}} />                           
-                                  </Button> 
-                                </DropdownMenuTrigger>
-                        
-                                <DropdownMenuContent align="end" side="right" className="ml-3"  onClick={(e) => e.stopPropagation()}>
-                         <DropdownMenuLabel className="text-lg font-semibold">Subscriptions</DropdownMenuLabel>
-                        
-                        { subscriptions.map((channel) => (
-                            <DropdownMenuItem
-                                    onClick={() => router.push(`/users/${channel.user.name}`)}
-                                    className="cursor-pointer py-2 flex items-center gap-3"
-                                  >
-                                    <UserAvatar
-                                            imageUrl={
-                                                channel.user.imageUrl ||
-                                                `https://ui-avatars.com/api/?name=${channel.user.name}&background=random&color=fff`
-                                            }
-                                            name={channel.user.name}
-                                            size="sm"
-                                        />
-                                        <span className="text-sm truncate group-data-[collapsible=icon]:hidden">
-                                            {channel.user.name}
-                                        </span>
-                                  </DropdownMenuItem>
-                                ))}
-                                 
-                        <DropdownMenuItem
-                                    onClick={() => router.push(`/feed/subscriptions`)}
-                                    className="cursor-pointer py-2 flex items-center gap-3"
-                                  >
-                                    <a
-                                    href="/feed/subscriptions"
-                                    className="text-blue-500 flex items-center gap-1 hover:text-blue-600 text-sm font-medium"
-                                >
-                                     <ChevronDownIcon className="size-4" />
-                                      Show more
-                                   
-                                </a>
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                    </SidebarMenuButton>
-                   </SidebarMenuItem>
-}
+   
                     {!isCollapsed && (
                         subscriptions.map((channel) => (
                             <SidebarMenuItem key={channel.user.id}>

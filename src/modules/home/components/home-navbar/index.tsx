@@ -6,7 +6,7 @@ import React from 'react'
 import { SearchInput } from './searchInput'
 import { Authbutton } from '@/modules/auth/ui/components/auth-button'
 import { Button } from '@/components/ui/button'
-import { BellIcon, MoonIcon, SunIcon } from 'lucide-react';
+import { BellIcon, MoonIcon, SearchIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { FaMoon, FaSun } from 'react-icons/fa6'
@@ -14,6 +14,7 @@ import { FaMoon, FaSun } from 'react-icons/fa6'
 export  function HomeNavbar() {
     const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+    const [search, setSearch] = useState(false);
 
   // Prevent hydration mismatch
   useEffect(() => {
@@ -25,7 +26,7 @@ export  function HomeNavbar() {
   };
   return (
     <nav className='fixed top-0 left-0 right-0 h-16 bg-background flex items-center px-2 pr-5 z-50'>
-     <div className="flex items-center gap-4 w-full">
+     <div className="flex relative items-center gap-4 w-full">
         <div className='flex items-center flex-shrink-0'>
                <SidebarTrigger />
                <a href="/" className='flex p-4 items-center gap-2'>
@@ -34,12 +35,27 @@ export  function HomeNavbar() {
                </a>
         </div>
 
-        <div className='flex-1 flex justify-center max-w-[720px] mx-auto'>
+        <div className='flex-1 hidden  md:flex justify-center max-w-[720px] mx-auto'>
               <SearchInput />
         </div>
-
+{
+  search &&   <div className='flex-1 flex  md:hidden absolute left-0 top-16 flex justify-center max-w-[720px] mx-auto'>
+              <SearchInput />
+        </div>
+}
         <div className='flex flex-shrink-0 items-center gap-4'>
           <Button 
+            className="rounded-full flex md:hidden" 
+            variant="outline" 
+            size="icon"
+            onClick={() =>{
+              setSearch(!search)
+            }}
+            disabled={!mounted}
+          >
+            <SearchIcon className="size-5" />
+          </Button>
+           <Button 
             className="rounded-full" 
             variant="outline" 
             size="icon"

@@ -19,11 +19,13 @@ export function Authbutton() {
                     }}
                 >
                     {/* Custom Menu Item in Clerk v7 */}
-                    <UserButton.Link
-                        label="My Studio"
-                        href="/studio"
-                        labelIcon={<ClapperboardIcon className="w-4 h-4" />}
-                    />
+                <UserButton.MenuItems>
+                        <UserButton.Link
+                            label="My Studio"
+                            href="/studio"
+                            labelIcon={<ClapperboardIcon className="w-4 h-4" />}
+                        />
+                    </UserButton.MenuItems>
                 </UserButton>
             </Show>
 
