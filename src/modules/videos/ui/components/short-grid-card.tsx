@@ -92,7 +92,7 @@ export const ShortGridCard = ({data, playlistId, onRemove}: VideoRowCardProps) =
                                         </a>
                                          <a  href={playlistId ? `/playlist/${playlistId}/${data.id}` : `/videos/${data.id}`}>
                                     <p className="text-sm text-muted-foreground line-clamp-2">
-                                        {compctViews} views • {compctLikes} likes •  {formatDistanceToNow(data.createdAt, {addSuffix: true})}
+                                        {compctViews} views •   {formatDistanceToNow(data.createdAt, {addSuffix: true})}
                                     </p>
                                        
                                         </a>

@@ -1,3 +1,4 @@
+
 // import { db } from "@/db";
 // import { Subscriptions, users, userTopicPreferences, videos, videosReactions, videosViews, videoTags, videoTopics, videoUpdateSchema } from "@/db/schema";
 // import { z } from "zod";
@@ -259,7 +260,7 @@
 
 //         try {
 //             const { id: userId } = ctx.user;
-//             //  console.log(ctx.user)
+//             // // console.log(ctx.user)
 
 //             if (!userId) {
 //                 throw new TRPCError({ code: "UNAUTHORIZED", message: "Missing User Id, Try Signing In Again" });
@@ -548,7 +549,7 @@
 //         videosViews,
 //         eq(videosViews.videoId, videos.id)
 //     )
-//  console.log({userVideoTopic, section: "Trending"})   
+// // console.log({userVideoTopic, section: "Trending"})   
 //     const data = await db
 //         .select({
 //             ...getTableColumns(videos),
@@ -660,13 +661,13 @@
 //             .where(inArray(Subscriptions.viewerId, userId ? [userId] : []))
 //     );
 //     const topic = userVideoTopic && userVideoTopic.length > 0 ? `${userVideoTopic[0]?.split("")[0]}${userVideoTopic[0]?.split("")[1]}`: undefined;
-// console.log({topic})
+//// console.log({topic})
 
 //     const sourceTags = await db.select().from(videoTags).where(
 //          ilike(videoTags.tagName, `%${topic}%`),
         
 //     );
-//     console.log({userVideoTopic,sourceTags, section: "default Feed"}) 
+//    // console.log({userVideoTopic,sourceTags, section: "default Feed"}) 
 
 // //     const userPreferences = await db.select().from(userTopicPreferences).where(
 // //         eq(userTopicPreferences.userId, userId)
@@ -916,7 +917,7 @@
 //         videosViews,
 //         eq(videosViews.videoId, videos.id)
 //     )
-//  console.log({userVideoTopic, section: "Trending"})   
+// // console.log({userVideoTopic, section: "Trending"})   
 //     const data = await db
 //         .select({
 //             ...getTableColumns(videos),
@@ -968,7 +969,7 @@
 //     if (!userId) {
 //         return await getDefaultFeed({ baseConditions, userId, cursor, limit, clerkUserId, userVideoTopic });
 //     }
-// console.log({userVideoTopic, section: "personalized Feed"})   
+//// console.log({userVideoTopic, section: "personalized Feed"})   
 //     const userPreferences = await db.select().from(userTopicPreferences).where(
 //         eq(userTopicPreferences.userId, userId)
 //     ).orderBy(desc(userTopicPreferences.affinity)).limit(10);
@@ -1322,13 +1323,13 @@
 //             .where(inArray(Subscriptions.viewerId, userId ? [userId] : []))
 //     );
 //     const topic = userVideoTopic.length > 0 ? `${userVideoTopic[0]?.split("")[0]}${userVideoTopic[0]?.split("")[1]}`: undefined;
-// console.log({topic})
+//// console.log({topic})
 
 //     const sourceTags = await db.select().from(videoTags).where(
 //          ilike(videoTags.tagName, `%${topic}%`),
         
 //     );
-//     console.log({userVideoTopic,sourceTags, section: "default Feed"}) 
+//    // console.log({userVideoTopic,sourceTags, section: "default Feed"}) 
 
 // //     const userPreferences = await db.select().from(userTopicPreferences).where(
 // //         eq(userTopicPreferences.userId, userId)

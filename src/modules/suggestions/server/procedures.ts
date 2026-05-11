@@ -52,11 +52,11 @@ const [playlistItem] = await db.select({
       const sourceTopic = await db.select().from(videoTopics).where(eq(videoTopics.videoId, videoId));
 
       if (sourceTags.length === 0 || sourceTopic.length === 0) {
-        console.log("sourceTags", sourceTags, "sourceTopic", sourceTopic)
+       // console.log("sourceTags", sourceTags, "sourceTopic", sourceTopic)
       }
       const tagNames = sourceTags.map(t => t.tagName);
       const topicNames = sourceTopic.map(t => t.topicName);
-      console.log({ sourceTags, sourceTopic })
+     // console.log({ sourceTags, sourceTopic })
       const data = await db
         .with(playlistAllVideos)
         .select({
@@ -96,7 +96,7 @@ const [playlistItem] = await db.select({
 
         )
         .limit(limit + 1);
-      console.log({ data })
+     // console.log({ data })
       const hasMore = data.length > limit;
       const items = hasMore ? data.slice(0, -1).sort(() => Math.random() - 0.5) : data.sort(() => Math.random() - 0.5);
 

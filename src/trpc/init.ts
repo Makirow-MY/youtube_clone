@@ -70,7 +70,7 @@ export const protectedProcedure = t.procedure.use(async function isAuthed(opts) 
         id: null,
         name: "Unkown User",
         clerkId: "",
-        imageUrl: `/avatar.png`,
+        imageUrl: `https://ui-avatars.com/api/?name=Unknown User&background=random`,
         createdAt: new Date(),
         updatedAt: new Date(),
       }

@@ -142,7 +142,7 @@ useEffect(()=>{
   }, [allLikedVideos, searchQuery]);
 
    const onSelect = (value: any) => {
-        console.log("Selected category:", value);
+       // console.log("Selected category:", value);
         setValue(value.name)
         setcat(value.isShort)
         

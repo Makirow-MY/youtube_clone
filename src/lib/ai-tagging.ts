@@ -116,7 +116,7 @@ export class AudienceAnalysisService {
 
     async updateVideoAudiences({ videoId, video }: AudienceAnalysisInput) {
         try {
-            console.log(`[Audience Analysis] Starting for video: ${videoId}`);
+           // console.log(`[Audience Analysis] Starting for video: ${videoId}`);
 
             // ====================== STEP 1: Get Rich Viewer Data ======================
             const viewers = await db
@@ -147,12 +147,12 @@ export class AudienceAnalysisService {
                 .groupBy(videosViews.userId, videosViews.createdAt, videosReactions.type);
 
             if (viewers.length < 15) {  // YouTube-like minimum threshold
-                console.log(`[Audience Analysis] Only ${viewers.length} viewers. Skipping deep analysis.`);
+               // console.log(`[Audience Analysis] Only ${viewers.length} viewers. Skipping deep analysis.`);
                 return;
             }
 
             const viewerIds = viewers.map(v => v.userId);
-            console.log(`[Audience Analysis] Found ${viewers.length} engaged viewers`);
+           // console.log(`[Audience Analysis] Found ${viewers.length} engaged viewers`);
 
             // ====================== STEP 2: Get Rich Viewing History ======================
             const userHistory = await db
@@ -174,7 +174,7 @@ export class AudienceAnalysisService {
                 .limit(500); // Prevent explosion on very active users
 
             if (userHistory.length === 0) {
-                console.log(`[Audience Analysis] No historical data found.`);
+               // console.log(`[Audience Analysis] No historical data found.`);
                 return;
             }
 
@@ -209,7 +209,7 @@ export class AudienceAnalysisService {
                 .sort((a, b) => b.finalScore - a.finalScore)
                 .slice(0, 10); // Top 8 topics
 
-            console.log(`[Audience Analysis] Top topics found:`, topTopics.map(t => t.name));
+           // console.log(`[Audience Analysis] Top topics found:`, topTopics.map(t => t.name));
 
             // ====================== STEP 5: Update Audience Segments ======================
             await this.updateAudienceSegments(videoId, topTopics, viewers.length);
@@ -217,7 +217,7 @@ export class AudienceAnalysisService {
             // ====================== STEP 6: Update User Topic Preferences ======================
             await this.updateUserTopicPreferences(viewerIds, allTopics, userHistory);
 
-            console.log(`[Audience Analysis] Successfully completed for video ${videoId}`);
+           // console.log(`[Audience Analysis] Successfully completed for video ${videoId}`);
 
         } catch (error) {
             console.error("[Audience Analysis] Critical error:", error);
@@ -377,7 +377,7 @@ export class AudienceAnalysisService {
                         }
                     });
 
-                console.log(`[Audience] Updated segment "${topic.name}" → Score: ${engagementScore.toFixed(3)}`);
+               // console.log(`[Audience] Updated segment "${topic.name}" → Score: ${engagementScore.toFixed(3)}`);
             }
         }
     }
@@ -421,7 +421,7 @@ export class AudienceAnalysisService {
 //     // Update audience segments based on viewing patterns
 //      async updateVideoAudiences({ videoId, video }: AudienceAnalysisInput) {
 //             try {
-//                 console.log(`Analyzing audience for video: ${videoId}`);
+//                // console.log(`Analyzing audience for video: ${videoId}`);
                 
 //                 // Step 1: Get viewers of this video
 //                 const viewers = await db
@@ -444,12 +444,12 @@ export class AudienceAnalysisService {
 //                 .groupBy(videosViews.userId, videosViews.createdAt, videosReactions.type);
                 
 //                 if (viewers.length === 0) {
-//                     console.log(`No viewers found for video ${videoId}, skipping audience analysis`);
+//                    // console.log(`No viewers found for video ${videoId}, skipping audience analysis`);
 //                     return;
 //                 }
                 
 //                 const viewerIds = viewers.map(v => v.userId);
-//            //     console.log(`Found ${viewerIds.length} unique viewers`);
+//            //    // console.log(`Found ${viewerIds.length} unique viewers`);
                 
 //                 // Step 2: Get viewing history for these users
 //                 const userHistory = await db
@@ -472,7 +472,7 @@ export class AudienceAnalysisService {
 //                   //  .where(sql`${videosViews.videoId} != ${videoId}`); // Exclude current video
                 
 //                 if (userHistory.length === 0) {
-//                     console.log(`No viewing history found for users of video ${videoId}`);
+//                    // console.log(`No viewing history found for users of video ${videoId}`);
 //                     return;
 //                 }
                 
@@ -589,7 +589,7 @@ export class AudienceAnalysisService {
 //                                 }
 //                             });
                         
-//                         console.log(`Updated audience segment "${topic.name}" for video ${videoId} with score ${engagementScore}`);
+//                        // console.log(`Updated audience segment "${topic.name}" for video ${videoId} with score ${engagementScore}`);
 //                     }
 //                 }
                 
@@ -617,7 +617,7 @@ export class AudienceAnalysisService {
 
 //               //  await this.updateUserTopicPreferences(viewerIds, allTopics);
                 
-//                 console.log(`Successfully analyzed audience for video ${videoId}`);
+//                // console.log(`Successfully analyzed audience for video ${videoId}`);
                 
 //             } catch (error) {
 //                 console.error("Error in AudienceAnalysisService:", error);
@@ -633,7 +633,7 @@ export class AudienceAnalysisService {
 //         try {
 //             // This would require a userTopicPreferences table
 //             // For now, just log that it would happen
-//             console.log(`Would update preferences for ${userIds.length} users based on ${topics.length} topics`);
+//            // console.log(`Would update preferences for ${userIds.length} users based on ${topics.length} topics`);
             
 //             // Implementation example (if you have userTopicPreferences table):
             

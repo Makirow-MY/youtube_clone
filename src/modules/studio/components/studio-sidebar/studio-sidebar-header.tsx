@@ -15,7 +15,7 @@ export const StudioSidebarHeader = () => {
      
 const {user} = useUser();
 const {state} = useSidebar();
-    // console.log("my user", user)
+    //// console.log("my user", user)
 
      if(!user) return(
         <SidebarHeader className="flex justify-center items-center pb-4" >

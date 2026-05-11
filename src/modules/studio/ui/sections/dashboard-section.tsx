@@ -91,7 +91,7 @@ export function DashboardSectionSuspense() {
   const { data: recentSubscribers } = useSuspenseQuery(trpc.studio.getRecentSubscribers.queryOptions({ limit: 5 }));
 
     const videos = query.data;
-    console.log({ stats, weeklyData, topVideos })
+   // console.log({ stats, weeklyData, topVideos })
     const allVideos = videos.pages.flatMap((page) => page.items);
 
     const compactVideos = useMemo(() => {

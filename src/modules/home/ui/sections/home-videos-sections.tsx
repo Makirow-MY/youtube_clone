@@ -114,7 +114,7 @@ export const HomeVideosSectionSuspense = ({ categoryId, categoryType, limit }: H
       return [...infiniteShorts];
     }, [infiniteShorts, videosQuery.data]);
 
-  console.log(shorts)
+ // console.log(shorts)
 
   if (shortsList.length === 0) return  <div className="flex flex-col items-center justify-center min-h-[70vh] py-20 px-6 text-center">
         <div className="relative mb-10">

@@ -19,7 +19,7 @@ export const videosViewsRouter = createTRPCRouter({
             try {
                 const { id: userId } = ctx.user;
                 const { videoId } = input;
-                //  console.log(ctx.user)
+                // // console.log(ctx.user)
 
                 if (!userId) {
                     throw new TRPCError({ code: "UNAUTHORIZED", message: "Missing User Id, Try Signing In Again" });

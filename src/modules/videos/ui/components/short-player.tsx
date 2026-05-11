@@ -193,7 +193,7 @@ export const ShortsPlayer = ({
 
   const handleNext = () => {
     // Implement next short navigation
-    console.log("Next short");
+   // console.log("Next short");
   };
 
   return (

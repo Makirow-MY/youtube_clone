@@ -23,7 +23,7 @@ export const searchRouter = createTRPCRouter({
 
             const { cursor, limit, query, categoryId } = input;
 
-            console.log({ query })
+           // console.log({ query })
 
             if (!query?.trim()) {
                 const data = await db
@@ -118,7 +118,7 @@ export const searchRouter = createTRPCRouter({
         .query(async ({ ctx, input }) => {
             const { query, limit } = input;
 
-            console.log({ query, limit })
+           // console.log({ query, limit })
 
             const searchTerm = `%${query.trim()}%`;
 
@@ -184,7 +184,7 @@ export const searchRouter = createTRPCRouter({
                 .where(ilike(users.name, searchTerm))
                 .limit(Math.floor(limit / 3));
 
-            console.log(channelResults)
+           // console.log(channelResults)
 
             const latestVideoSub = db
                 .select({
@@ -224,7 +224,7 @@ export const searchRouter = createTRPCRouter({
 
 
 
-            console.log({ playlistResults })
+           // console.log({ playlistResults })
             const allResults = [
                 ...videoResults,
                 ...channelResults,
@@ -233,7 +233,7 @@ export const searchRouter = createTRPCRouter({
 
             // Shuffle lightly and limit final output
             allResults.sort(() => Math.random() - 0.5);
-            console.log(allResults)
+           // console.log(allResults)
             return allResults.slice(0, limit);
             // return results;
         }),

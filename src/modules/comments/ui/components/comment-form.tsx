@@ -41,7 +41,7 @@ export const CommentForm = ({
       content: "",
     }
   });
-  console.log("current user in comment form", user, form)
+ // console.log("current user in comment form", user, form)
   const create = useMutation(
     trpc.comments.create.mutationOptions({
       onSuccess: () => {

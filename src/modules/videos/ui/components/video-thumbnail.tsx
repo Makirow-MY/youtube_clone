@@ -19,7 +19,7 @@ interface VideoThumbnailProps {
 
 
 export const VideoThumnail = ({imageUrl, isChange = false, isShort, duration, previewUrl, title}: VideoThumbnailProps) => {
-//  console.log({imageUrl, isChange, isShort, duration, previewUrl, title})
+// // console.log({imageUrl, isChange, isShort, duration, previewUrl, title})
     return (
         <div className="relative group">
                 <div  className={`relative  bg-black/50 overflow-hidden rounded-xl w-full ${!isChange ? "aspect-video " : "aspect-[3/4]"}`}>

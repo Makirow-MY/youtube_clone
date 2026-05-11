@@ -263,7 +263,7 @@ export const videosRouter = createTRPCRouter({
 
         try {
             const { id: userId } = ctx.user;
-            //  console.log(ctx.user)
+            // // console.log(ctx.user)
 
             if (!userId) {
                 throw new TRPCError({ code: "UNAUTHORIZED", message: "Missing User Id, Try Signing In Again" });
@@ -584,7 +584,7 @@ export const videosRouter = createTRPCRouter({
             }
 
             else {
- console.log({ topic, clerkUserId, userId , userVideoTopic})
+// console.log({ topic, clerkUserId, userId , userVideoTopic})
 
                 const retrivedData = await db
                     .with(viewerReactions, viewerSubscription)

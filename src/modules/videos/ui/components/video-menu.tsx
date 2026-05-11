@@ -308,7 +308,7 @@ const downloadWithProgress = async (url: string, filename: string) => {
   const AddPlaylist = useMutation(
     trpc.playList.addPlaylist.mutationOptions({
       onSuccess: async (data) => {
-        console.log("Add to playlist response:", data);
+       // console.log("Add to playlist response:", data);
         queryClient.invalidateQueries({
           queryKey: trpc.playList.getPlayList.queryKey(), // partial key = most reliable
         });
@@ -345,7 +345,7 @@ const downloadWithProgress = async (url: string, filename: string) => {
 
   const handleReportSubmit = () => {
     if (!selectedReportReason) return;
-    console.log('Report submitted:', { videoId, reason: selectedReportReason, details: reportDetails });
+   // console.log('Report submitted:', { videoId, reason: selectedReportReason, details: reportDetails });
 
     toast.success('Thank you! Your report has been submitted.');
     setIsReportOpen(false);

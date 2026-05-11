@@ -7,10 +7,11 @@ import {useClerk, useAuth, useUser} from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 
 
+
 const items = [
     {
         title:  "Your Profile",
-        url: "/user",
+        url: `/user`,
         icon: UserCircleIcon,
         auth:true,
     },
@@ -38,6 +39,7 @@ const items = [
 export const   PersonalSection = () => {
         const clerk = useClerk();
         const {isSignedIn} = useAuth();
+        const {user} =  useUser()
       const { state } = useSidebar();   // Get current sidebar state
   const pathname = usePathname()
   const isCollapsed = state === "collapsed";
@@ -63,7 +65,7 @@ export const   PersonalSection = () => {
                           return clerk.openSignIn();
                         }}} // add navigation logic here
                     > 
-                        <a href={item.url} className="flex items-center gap-4">
+                        <a href={item.title === "Your Profile" ? `/user/${user?.id}` : item.url} className="flex items-center gap-4">
                             <item.icon style={{height: "20px", width: "20px"}} className="size-5" />
                             <span className="text-sm">{item.title}</span>
                         </a>

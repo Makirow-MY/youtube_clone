@@ -131,7 +131,7 @@ export const PlaylistSubSectionSuspense = ({ playListId }: SuscriptionButtonProp
   const allPlaylist = historyData.pages.flatMap((page) => page.PlayList).slice(0, 1);
   const PlayListTitle = allPlaylist[0]?.name;
 
-  console.log({ PlayListTitle, allPlaylist });
+ // console.log({ PlayListTitle, allPlaylist });
 
   return (
     <>

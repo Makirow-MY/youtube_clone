@@ -47,7 +47,7 @@ export const FilterCarousel = ({
     }
     )
   }, [api])
-  // console.log("rendering filter carousel with value:", isLoading, value);
+  //// console.log("rendering filter carousel with value:", isLoading, value);
   return (
     <>
     { !isLoading && data.length > 0 && 

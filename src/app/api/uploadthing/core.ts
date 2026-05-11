@@ -23,7 +23,7 @@ export const ourFileRouter = {
       const { userId: clerkUserId} = await auth();
      
        if (!clerkUserId) throw new UploadThingError("Unauthorized");
-     // console.log(clerkUserId, input)
+     //// console.log(clerkUserId, input)
 
       const [user] = await db.select().from(users)
       .where(eq(users.clerkId, clerkUserId))

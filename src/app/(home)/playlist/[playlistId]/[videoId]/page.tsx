@@ -18,7 +18,7 @@ interface PageProps {
 
 // export default async function Page ({params}: PageProps) {
 //   const {playlistId, videoId} = await params
-// console.log({playlistId, videoId})
+//// console.log({playlistId, videoId})
 //   await Promise.all([
 
 //    prefetch(
@@ -41,7 +41,7 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const { playlistId, videoId } = await params
-  console.log({ playlistId, videoId })
+ // console.log({ playlistId, videoId })
 
   await Promise.all([
     prefetch(trpc.videos.getOne.queryOptions({ id: videoId })), // normal query

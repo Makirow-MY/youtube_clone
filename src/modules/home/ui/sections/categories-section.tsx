@@ -42,7 +42,7 @@ const categories = useSuspenseQuery(
 
 
   const onSelect = (value: string | null) => {
-   // console.log("Selected category:", value);
+   //// console.log("Selected category:", value);
     const url = new URL(window.location.href);
     if (value) {
       url.searchParams.set("categoryId", value);
