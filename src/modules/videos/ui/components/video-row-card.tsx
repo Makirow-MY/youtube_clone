@@ -17,7 +17,7 @@ export const videoRowCardVariants = cva("flex group min-w-0", {
         size: {
             default: "gap-4 hover:bg-secondary rounded-lg  p-2",
             compact: "gap-2 hover:bg-secondary rounded-lg p-1",
-            veryCompact: "gap-2  hover:bg-accent-foreground rounded-lg p-1"
+            veryCompact: "gap-2  hover:bg-accent rounded-lg p-1"
         }
     },
     defaultVariants: {
