@@ -111,7 +111,7 @@ console.log("Suggestions:", suggestions);
               )}
 
               {item.type === 'channel' && (
-                   <UserAvatar size={"sm"} imageUrl={item.thumbnailUrl  || `https://ui-avatars.com/api/?name=${item.title}&background=random`} name={item.title || 'User'} /> 
+                   <UserAvatar size={"sm"} imageUrl={item.thumbnailUrl  || `/avatar.png`} name={item.title || 'User'} /> 
               )}
 
               {item.type === 'playlist' && (

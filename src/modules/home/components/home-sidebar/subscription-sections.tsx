@@ -108,7 +108,7 @@ const router = useRouter();
                                     className="py-6 hover:bg-sidebar-accent"
                                 >
                                     <a
-                                        href={`/users/${channel.user.name}`}
+                                        href={`/user/${channel.user.clerkId}`}
                                         className="flex items-center gap-3"
                                     >
                                         <UserAvatar

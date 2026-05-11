@@ -55,7 +55,7 @@ if (!SIGNING_SECRET) {
         await db.insert(users).values({
             clerkId: data.id,
             name: `${data.first_name} ${data.last_name}` || "",
-            imageUrl: data.image_url || `https://ui-avatars.com/api/?name=${data.first_name} ${data.last_name}&background=random`,
+            imageUrl: data.image_url || `/avatar.png`,
         })
     }
      if (eventType === "user.updated") {

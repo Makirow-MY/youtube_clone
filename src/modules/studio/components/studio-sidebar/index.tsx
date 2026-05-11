@@ -7,11 +7,12 @@ import { LayoutDashboard, LogOutIcon, VideoIcon } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { StudioSidebarHeader } from './studio-sidebar-header';
 import { Separator } from '@/components/ui/separator';
+import { useUser } from '@clerk/nextjs';
 
 export function StudioSidebar() {
 
   const pathname = usePathname()
-
+ const {user} = useUser()
 
   return (
     <Sidebar className="pt-16 border-gray-500/0.3 z-40 " collapsible='icon'>

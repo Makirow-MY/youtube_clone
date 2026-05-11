@@ -76,7 +76,7 @@ export const ShortGridCard = ({data, playlistId, onRemove}: VideoRowCardProps) =
             </a>
             
                                 <div className="flex gap-3">
-                                        <a href={`/users/${data.user.id}`} >
+                                        <a href={`/user/${data.user.clerkId}`} >
                                         <UserAvatar  imageUrl={data.user.imageUrl} name={data.user.name} />
                                        
                                         </a>
@@ -86,7 +86,7 @@ export const ShortGridCard = ({data, playlistId, onRemove}: VideoRowCardProps) =
                                        
                                         </a>
 
-                                        <a href={`/users/${data.user.id}`} >
+                                        <a href={`/user/${data.user.clerkId}`} >
                                         <UserInfo   name={data.user.name} />
                                        
                                         </a>

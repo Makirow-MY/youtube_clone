@@ -25,7 +25,7 @@ export const VideoOwner = ({ user, video, videoId }: VideoOwnerProps) => {
    })
    return (
       <div className={` flex flex-nowrap items-center sm:items-start justify-between sm:justify-start gap-3 min-w-0`}>
-         <a href={`/users/${user.id}`} >
+         <a href={`/user/${user.clerkId}`} >
             <div className="flex items-center gap-3 min-w-0">
                <UserAvatar size={"lg"} imageUrl={user.imageUrl} name={user.name} />
                <div className="flex flex-col gap-1 min-w-0">

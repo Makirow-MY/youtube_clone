@@ -43,7 +43,7 @@ export default function RootLayout({
        <TRPCReactProvider>
         <Toaster />
         <TooltipProvider>
-         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
         </ThemeProvider>
         </TooltipProvider>

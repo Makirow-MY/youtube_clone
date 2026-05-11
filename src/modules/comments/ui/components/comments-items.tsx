@@ -110,15 +110,15 @@ const queryClient = useQueryClient();
     return (
         <div>
             <div className="flex gap-4">
-           <a href={`/users/${comments.userId}`}>
+           <a href={`/user/${comments.user.clerkId}`}>
            <UserAvatar
            size={variant === "comment" ? "lg" : "sm"}
-           imageUrl={comments.user?.imageUrl || `https://ui-avatars.com/api/?name=${comments.user.name || "Unknown User"}&background=random`}
+           imageUrl={comments.user?.imageUrl || `/avatar.png`}
            name={comments.user.name}
            /></a>
            <div className="flex-1 min-w-0">
 
-            <a href={`/users/${comments.userId}`}>
+            <a href={`/user/${comments.user.clerkId}`}>
             <div className="flex items-center gap-2 mb-0.5">
                 <span className="font-semibold text-sm pb-0.5">
                     {comments.user.clerkId === clerkUserId ? `${comments.user.name.split(' ')[0]} ${comments.user.name.split(' ')[1]}... (You)` : comments.user.name}

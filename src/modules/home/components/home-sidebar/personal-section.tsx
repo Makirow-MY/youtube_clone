@@ -1,12 +1,19 @@
 "use client";
 
 import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
-import { FlameIcon, HistoryIcon, HomeIcon, ListVideoIcon, PlaySquareIcon, ThumbsUpIcon } from "lucide-react";
+import { FlameIcon, HistoryIcon, HomeIcon, ListVideoIcon, PlaySquareIcon, ThumbsUpIcon, UserCircle2Icon, UserCircleIcon } from "lucide-react";
 import Link from "next/link";
-import {useClerk, useAuth} from "@clerk/nextjs";
+import {useClerk, useAuth, useUser} from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 
+
 const items = [
+    {
+        title:  "Your Profile",
+        url: "/user",
+        icon: UserCircleIcon,
+        auth:true,
+    },
     {
         title:  "History",
         url: "/playlist/history",

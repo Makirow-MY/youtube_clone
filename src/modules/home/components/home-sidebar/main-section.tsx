@@ -82,12 +82,12 @@ const subscriptions = subscriptionsQ.data;
                                         
                                         { subscriptions.map((channel) => (
                                             <DropdownMenuItem>
-                                              <a   href={`/users/${channel.user.name}`}     className="cursor-pointer py-2 flex items-center gap-3"
+                                              <a   href={`/user/${channel.user.clerkId}`}     className="cursor-pointer py-2 flex items-center gap-3"
                                               >
                                                       <UserAvatar
                                                             imageUrl={
                                                                 channel.user.imageUrl ||
-                                                                `https://ui-avatars.com/api/?name=${channel.user.name}&background=random&color=fff`
+                                                                `/avatar.png`
                                                             }
                                                             name={channel.user.name}
                                                             size="sm"
@@ -148,7 +148,7 @@ const subscriptions = subscriptionsQ.data;
                          <DropdownMenuItem>
                                     <a href={`/user`}  className="flex items-center cursor-pointer py-2">
                                       <UserCircleIcon className="mr-2"/>
-                                    My Page
+                                    Your Profile
                                     </a>
                                   </DropdownMenuItem>
                                   <DropdownMenuItem>

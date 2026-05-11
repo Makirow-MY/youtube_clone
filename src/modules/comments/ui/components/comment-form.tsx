@@ -93,7 +93,7 @@ export const CommentForm = ({
       <form onSubmit={form.handleSubmit(handleSubmit)} className="flex gap-4 group">
         <UserAvatar
           size="lg"
-          imageUrl={user?.imageUrl || `https://ui-avatars.com/api/?name=Unknown User&background=random&color=#fff`}
+          imageUrl={user?.imageUrl || `/avatar.png`}
           name={user?.username || 'User'}
         />
 
@@ -133,11 +133,7 @@ export const CommentForm = ({
               disabled={create.isPending}
               type="submit"
               size="sm"
-              className="hover: bg-red-400"
-              onClick={() => {
-                toast.success("hello")
-              }}
-            >
+               >
               {variant === "reply" ? "Leave a reply" : "Leave a comment"}
             </Button>
           </div>

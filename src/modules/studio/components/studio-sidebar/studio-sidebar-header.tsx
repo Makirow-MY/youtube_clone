@@ -31,7 +31,7 @@ const {state} = useSidebar();
        return (
          <SidebarMenuItem>
                    <SidebarMenuButton    tooltip={"Your Profile"} asChild>
-                         <a href={"/users/current"} >
+                         <a href={`/user/${user.id}`} >
                           <UserAvatar imageUrl={`${user?.imageUrl}`} name={user?.fullName || user?.username || "User"    } 
                          size={"xs"}
                           />
@@ -45,7 +45,7 @@ const {state} = useSidebar();
     return (
        
                     <SidebarHeader className="flex justify-center items-center pb-4">
-                        <a href={"/users/current"} >
+                        <a href={`/user/${user.id}`} >
                           <UserAvatar imageUrl={`${user?.imageUrl}`} name={user?.fullName || user?.username || "User"    } 
                           className="size-[112px] object-cover hover:opacity-80 transition-opacity"
                           />

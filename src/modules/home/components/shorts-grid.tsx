@@ -34,7 +34,7 @@ export const ShortsGridCard = ({ data }: ShortsGridCardProps) => {
       </a>
 
       <div className="flex gap-3">
-        <a href={`/users/${data.user.id}`}>
+        <a href={`/user/${data.user.clerkId}`}>
           <UserAvatar imageUrl={data.user.imageUrl} name={data.user.name} size="sm" />
         </a>
 
@@ -43,7 +43,7 @@ export const ShortsGridCard = ({ data }: ShortsGridCardProps) => {
             <h3 className="font-medium line-clamp-2 text-sm leading-tight">{data.title}</h3>
           </a>
 
-          <a href={`/users/${data.user.id}`}>
+          <a href={`/user/${data.user.clerkId}`}>
             <UserInfo name={data.user.name} className="text-xs" />
           </a>
 
