@@ -20,7 +20,7 @@ export const VideoPageView = ({videoId, playlistId}: VideoPageViewProps) => {
      <div className="flex-1 min-w-0">
           <VideoPageSection videoId={videoId} />
           <div className="lg:hidden block mt-4">
-           <SuggestionPageSection isManual={true} videoId={videoId} />
+           <SuggestionPageSection isManual={true} playlistId={playlistId} videoId={videoId} />
           </div>
           <CommentsPageSection videoId={videoId} />
      </div>

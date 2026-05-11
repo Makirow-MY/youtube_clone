@@ -98,12 +98,12 @@ console.log("suggestions query", suggestions.pages.flatMap(page => page.playlist
       <div className="hidden md:block space-y-4">
         {
           playlistId && <div className="bg-secondary rounded-lg">
-          <div className="bg-border p-3.5 shadow-sm">
+          <div className=" p-3 shadow-sm">
             <h1 className="text-xl font-bold mb-2">{suggestions.pages.flatMap(page => page.playlist)[0]?.name || "Playlist"}</h1>
-             <h1 className="text-sm  text-muted-foreground mb-2">{suggestions.pages.flatMap(page => page.playlist)[0]?.videoCount} videos</h1>
+             <p className="text-sm  text-muted-foreground mb-2">{suggestions.pages.flatMap(page => page.playlist)[0]?.videoCount} videos</p>
           </div>
 
-           <div className="bg-secondary py-2 max-h-[60vh] overflow-y-scroll ">
+           <div className="bg-primary-foreground py-2 pb-4 space-y-4 max-h-[60vh] overflow-y-scroll ">
             {
               suggestions.pages.flatMap(page => page.items).filter((video) => video.playlistId === playlistId).map(video => (
                 <VideoRowCard videoId={videoId} playlistId={playlistId} key={video.id} data={video} size={"veryCompact"} />

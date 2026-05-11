@@ -53,7 +53,7 @@ export const UserSection = ({userId}: PagePops) => {
       )}
     >
       <Suspense fallback={<div>
-        <Skeleton className="w-full h-[200px]" />
+        <Skeleton className="w-[90%] h-[200px]" />
         </div>}>
 
         <UserSectionSuspense userId={userId} />

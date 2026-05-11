@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { users, videos, videosReactions, videosViews, videoUpdateSchema } from "@/db/schema";
+import { playLists, playListsVideos, users, videos, videosReactions, videosViews, videoUpdateSchema } from "@/db/schema";
 import { z } from "zod";
 import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { eq, and, or, lt, desc, getTableColumns, exists } from "drizzle-orm";
@@ -37,7 +37,58 @@ export const videosReactionsRouter = createTRPCRouter({
                         eq(videosReactions.type, "like")
                     ))
 
+                    const [exitingPlayList] = await db.select().from(playLists)
+                    .where(and(
+                        eq(playLists.userId, userId),
+                        eq(playLists.name, "liked videos"),
+                        
+                    ))
+               
+
                 if (exitingVideoReactions) {
+
+                    if(exitingPlayList)
+                        {
+
+                            const [existingVideoPlaylist] =  await db.select().from(playListsVideos)
+                .where(
+                    and(eq(playListsVideos.playListId, exitingPlayList.id),
+                    eq(playListsVideos.videoId, videoId),
+                    )
+                )
+
+                if(existingVideoPlaylist)
+                    {
+                        const [deletePlaylistVideos] = await db.delete(playListsVideos)
+                .where(
+                    and(eq(playListsVideos.playListId, existingVideoPlaylist.playListId),
+                    eq(playListsVideos.videoId, videoId),
+                    )
+                ).returning()
+
+            if (!deletePlaylistVideos) {
+                throw new TRPCError({ code: "NOT_IMPLEMENTED" })
+            }
+                        }
+
+           const data =  await db.select().from(playListsVideos)
+                .where(
+                    and(eq(playListsVideos.playListId, exitingPlayList.id),
+                    )
+                )
+
+                 if (data.length === 0) {
+                    await db.delete(playLists)
+                    .where(
+                        and(eq(playLists.id, exitingPlayList.id),
+                            eq(playLists.userId, userId),
+                           eq(playLists.name, "liked videos"),
+                        )
+                    )
+                }
+
+                }
+
 
                     const [deletedReaction] = await db.delete(videosReactions)
                         .where(and(
@@ -47,7 +98,8 @@ export const videosReactionsRouter = createTRPCRouter({
                         )).returning()
 
                     return deletedReaction;
-                }
+
+            }
 
                 const [newVideoReaction] = await db.insert(videosReactions).values({
                     userId,
@@ -60,10 +112,34 @@ export const videosReactionsRouter = createTRPCRouter({
                             type: "like",
                         }
                     })
+                    .returning();
+
+                     const [createPlaylist] = await db.insert(playLists)
+                    .values({
+                        userId,
+                        name: "liked videos",
+                        videoVisibility: "private"
+                    })
                     .returning()
 
+                if (!createPlaylist) {
+                    throw new TRPCError({ code: "NOT_IMPLEMENTED" })
+                }
+                const [createPlaylistVideo] = await db.insert(playListsVideos)
+                    .values({
+                        videoId: videoId,
+                        playListId: createPlaylist.id,
+                    })
+                    .returning()
 
-                return newVideoReaction;
+                if (!createPlaylistVideo) {
+                    throw new TRPCError({ code: "BAD_REQUEST" })
+                }
+                
+         return newVideoReaction;
+            
+
+               
 
             }
             catch (error) {

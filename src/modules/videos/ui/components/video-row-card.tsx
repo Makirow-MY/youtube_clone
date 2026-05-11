@@ -17,7 +17,7 @@ export const videoRowCardVariants = cva("flex group min-w-0", {
         size: {
             default: "gap-4 hover:bg-secondary rounded-lg  p-2",
             compact: "gap-2 hover:bg-secondary rounded-lg p-1",
-            veryCompact: "gap-1  hover:bg-white rounded-lg p-1"
+            veryCompact: "gap-2  hover:bg-primary rounded-lg p-1"
         }
     },
     defaultVariants: {
@@ -30,7 +30,7 @@ export const videoRowCardVariantsSke = cva("flex group min-w-0", {
         size: {
             default: "gap-4 rounded-lg  p-2",
             compact: "gap-2 rounded-lg p-1",
-            veryCompact: "gap-1 rounded-lg p-1"
+            veryCompact: "gap-2 rounded-lg p-1"
         }
     },
     defaultVariants: {
@@ -162,7 +162,7 @@ export const VideoRowCard = ({ data, size = "default", playlistId, videoId, onRe
                                             align="center"
                                             className="bg-black/70"
                                         >
-                                            <p>From the video description</p>
+                                            <p>{data.description}</p>
                                         </TooltipContent>
 
                                     </Tooltip>
@@ -182,9 +182,9 @@ export const VideoRowCard = ({ data, size = "default", playlistId, videoId, onRe
                             )
                         }
                     </a>
-                    <div className="flex-none">
+                   {size !== "veryCompact" && <div className="flex-none">
                         <VideoMenu data={data} onRemove={onRemove} videoId={data.id} variant="ghost" />
-                    </div>
+                    </div>}
                 </div>
             </div>
         </div>

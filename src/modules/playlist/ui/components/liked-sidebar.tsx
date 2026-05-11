@@ -55,7 +55,7 @@ export function LikedSidebar({ latestVideo, totalCount = 0 }: LikedSidebarProps)
         <p className="text-xs text-muted-foreground">{totalCount && totalCount > 0 ? totalCount : "No"} videos {latestVideo.viewCount > 0 ? latestVideo.viewCount : "No" } views  Last updated on {expandedDate}</p>
       </div>
 
-     <div className="flex items-center gap-2">
+     <div className="flex w-full flex-col items-center gap-2">
         <Button variant="secondary" className="w-full rounded-full" asChild>
         <a href="/playlist/liked" className="flex items-center gap-2">
          <Play className="size-5 fill-white" />

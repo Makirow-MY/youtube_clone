@@ -19,7 +19,7 @@ export const UserPageInfo = ({user} : {user: UserGetOneOutput["user"]}) => {
     })
     return(
          <div className={isMobile ? "p-0  w-full ": "p-12 w-[80%] "}>
-               <div className="flex bg-amber-300 items-start flex-col"
+               <div className="flex items-start flex-col"
                >
 <div className="flex items-center gap-3">
 <UserAvatar 
