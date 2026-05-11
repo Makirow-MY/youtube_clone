@@ -17,7 +17,7 @@ export const videoRowCardVariants = cva("flex group min-w-0", {
         size: {
             default: "gap-4 hover:bg-secondary rounded-lg  p-2",
             compact: "gap-2 hover:bg-secondary rounded-lg p-1",
-            veryCompact: "gap-2  hover:bg-secondary rounded-lg p-1"
+            veryCompact: "gap-2  hover:bg-accent-foreground rounded-lg p-1"
         }
     },
     defaultVariants: {
@@ -117,7 +117,7 @@ export const VideoRowCard = ({ data, size = "default", playlistId, videoId, onRe
     }, [data.likeCount])
 
     return (
-        <div className={videoRowCardVariants({ size }) + (playlistId && videoId === data.id ? "bg-transparent" : "bg-transparent")}>
+        <div className={videoRowCardVariants({ size }) + (playlistId && videoId === data.id ? "bg-secondary" : "bg-transparent")}>
             <div className={"flex items-center gap-1"}>
                 {playlistId && videoId === data.id && <ArrowBigRight className="size-4 fill-black" />}
                 {playlistId && videoId !== data.id && <ArrowBigLeft className="size-4 opacity-0" />}
