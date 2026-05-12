@@ -102,7 +102,7 @@ export const SuggestionPageSectionSuspense = ({ videoId, isManual, playlistId }:
              <p className="text-sm  text-muted-foreground mb-2">{suggestions.pages.flatMap(page => page.playlist)[0]?.videoCount} videos</p>
           </div>
 
-           <div className="bg-primary-foreground py-2 pb-4 space-y-4 max-h-[60vh] overflow-y-scroll ">
+           <div className="bg-primary-foreground py-2 pl-1 pb-4 space-y-4 max-h-[60vh] overflow-y-scroll ">
             {
               suggestions.pages.flatMap(page => page.items).filter((video) => video.playlistId === playlistId).map((video, index )=> (
                 <VideoRowCard videoId={videoId} playlistId={playlistId} key={video.id} data={video} index={index} size={"veryCompact"} />

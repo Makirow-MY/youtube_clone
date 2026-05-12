@@ -102,7 +102,7 @@ export const VideoRowCardSkeleton = ({ size = "default" }: { size?: "default" | 
 }
 
 
-export const VideoRowCard = ({ data, index, size = "default", playlistId, videoId, onRemove }: VideoRowCardProps) => {
+export const VideoRowCard = ({ data, index= 0, size = "default", playlistId, videoId, onRemove }: VideoRowCardProps) => {
     const compctViews = useMemo(() => {
         return new Intl.NumberFormat("en", {
             notation: "compact",
@@ -122,7 +122,7 @@ export const VideoRowCard = ({ data, index, size = "default", playlistId, videoI
            
             <div className={"flex items-center gap-1"}>
                 {playlistId && videoId === data.id &&  <Play className="size-4" />}
-                {playlistId && videoId !== data.id && <p className="text-xs text-muted-foreground">{index}</p>}
+                {playlistId && videoId !== data.id && <p className="text-xs text-muted-foreground">{index + 1}</p>}
                 <a href={playlistId ? `/playlist/${playlistId}/${data.id}` : `/videos/${data.id}`} className={thumbnailVariants({ size })} >
                     <VideoThumnail
                         imageUrl={data.thumbnailUrl}
