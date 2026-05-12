@@ -37,7 +37,7 @@ export const VideoPlayer = ({
   onPlaylistNext,
 }: VideoPlayerProps & {
   playlistId?: string;
-  currentVideoId: string;
+  currentVideoId?: string;
   onPlaylistNext?: () => void;}) => {
   const playerRef = useRef<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
