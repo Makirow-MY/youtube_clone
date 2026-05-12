@@ -121,7 +121,7 @@ export const VideoRowCard = ({ data, index= 0, size = "default", playlistId, vid
         <div className={videoRowCardVariants({ size }) + (playlistId && videoId === data.id ? "bg-red-500/20 cursor-pointer" : "bg-transparent cursor-pointer")}>
            
             <div className={"flex items-center gap-1"}>
-                {playlistId && videoId === data.id &&  <Play className="size-4" />}
+                {playlistId && videoId === data.id &&  <Play className="size-3 fill-muted-foreground" />}
                 {playlistId && videoId !== data.id && <p className="text-xs text-muted-foreground">{index + 1}</p>}
                 <a href={playlistId ? `/playlist/${playlistId}/${data.id}` : `/videos/${data.id}`} className={thumbnailVariants({ size })} >
                     <VideoThumnail
