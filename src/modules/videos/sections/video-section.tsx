@@ -97,7 +97,7 @@ const nextVideo = useMemo(() => {
 
   const handlePlaylistNext = () => {
     if (!nextVideo || !playlistId) return;
-  router.push(`/${playlistId}/${nextVideo.id}`);
+  router.push(`/playlist/${playlistId}/${nextVideo.id}`);
   };
    
 
