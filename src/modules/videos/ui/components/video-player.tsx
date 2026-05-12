@@ -32,7 +32,13 @@ export const VideoPlayer = ({
   defaultQuality = "auto",
   showControls = true,
   loop = false,
-}: VideoPlayerProps) => {
+  playlistId,
+  currentVideoId,
+  onPlaylistNext,
+}: VideoPlayerProps & {
+  playlistId?: string;
+  currentVideoId: string;
+  onPlaylistNext?: () => void;}) => {
   const playerRef = useRef<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -155,7 +161,12 @@ export const VideoPlayer = ({
 
   const handleEnded = () => {
     setIsPlaying(false);
-    onEnded?.();
+   // Playlist continuation takes priority
+    if (playlistId && onPlaylistNext) {
+      onPlaylistNext();
+    } else {
+      onEnded?.();
+    }
   };
 
   const handleTimeUpdate = () => {
@@ -337,7 +348,7 @@ export const VideoPlayer = ({
         loop={loop}
         onPlay={handlePlay}
         onPause={handlePause}
-        onEnded={handleEnded}
+        onEnded={handleEnded}      
         onTimeUpdate={handleTimeUpdate}
         onVolumeChange={handleVolumeChange}
         onLoadedMetadata={handleLoadedMetadata}

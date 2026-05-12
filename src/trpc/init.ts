@@ -6,11 +6,11 @@ import { eq } from 'drizzle-orm'
 import { users } from '@/db/schema'
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { ratelimit } from '@/lib/retelimit';
+import { cookies } from 'next/headers';
 
 
 export const createTRPCContext = cache(async () => {
   const { userId } = await auth();
-
 
   return { clerkUserId: userId };
 });

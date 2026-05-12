@@ -17,7 +17,7 @@ export const videoRowCardVariants = cva("flex group min-w-0", {
         size: {
             default: "gap-4 hover:bg-secondary rounded-lg  p-2",
             compact: "gap-2 hover:bg-secondary rounded-lg p-1",
-            veryCompact: "gap-2  hover:bg-accent rounded-lg p-1"
+            veryCompact: "gap-2 flex items-center hover:bg-accent rounded-lg p-2"
         }
     },
     defaultVariants: {
@@ -56,6 +56,7 @@ interface VideoRowCardProps extends VariantProps<typeof videoRowCardVariants> {
     playlistId?: string;
     videoId?: string;
     onRemove?: () => void;
+    index?:number;
 
 }
 
@@ -101,7 +102,7 @@ export const VideoRowCardSkeleton = ({ size = "default" }: { size?: "default" | 
 }
 
 
-export const VideoRowCard = ({ data, size = "default", playlistId, videoId, onRemove }: VideoRowCardProps) => {
+export const VideoRowCard = ({ data, index, size = "default", playlistId, videoId, onRemove }: VideoRowCardProps) => {
     const compctViews = useMemo(() => {
         return new Intl.NumberFormat("en", {
             notation: "compact",
@@ -117,9 +118,10 @@ export const VideoRowCard = ({ data, size = "default", playlistId, videoId, onRe
     }, [data.likeCount])
 
     return (
-        <div className={videoRowCardVariants({ size }) + (playlistId && videoId === data.id ? "bg-secondary" : "bg-transparent")}>
+        <div className={videoRowCardVariants({ size }) + (playlistId && videoId === data.id ? "bg-accent cursor-pointer" : "bg-transparent cursor-pointer")}>
+           
             <div className={"flex items-center gap-1"}>
-                {playlistId && videoId === data.id && <ArrowBigRight className="size-4 fill-black" />}
+                {playlistId && videoId === data.id && <p className="text-xs text-muted-foreground">{index}</p>}
                 {playlistId && videoId !== data.id && <ArrowBigLeft className="size-4 opacity-0" />}
                 <a href={playlistId ? `/playlist/${playlistId}/${data.id}` : `/videos/${data.id}`} className={thumbnailVariants({ size })} >
                     <VideoThumnail

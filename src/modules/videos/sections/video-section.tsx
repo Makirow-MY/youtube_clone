@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {  useTRPC } from "@/trpc/client";
 import { PlayIcon, RefreshCw, WifiOff } from "lucide-react";
-import { Suspense } from "react";
+import { Suspense, useMemo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { VideoPlayer } from "../ui/components/video-player";
 import { VideoBanner } from "../ui/components/video-banner";
@@ -13,16 +13,19 @@ import { useAuth } from "@clerk/nextjs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useSuspenseInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { DEFAULT_LIMIT } from "@/constants";
+import { useRouter, useSearchParams } from "next/navigation";
 
 
 interface HomeViewProps {
     videoId: string;
+    playlistId?: string;
 }
 
 
-export const VideoPageSection = ({videoId}: HomeViewProps) => {
+export const VideoPageSection = ({videoId, playlistId}: HomeViewProps) => {
 
   return (
        <ErrorBoundary 
@@ -54,21 +57,47 @@ export const VideoPageSection = ({videoId}: HomeViewProps) => {
           </div>
         )}
        >  <Suspense fallback={<VideoPageSkeleton /> }>
-               <VideoPageSectionSuspense videoId={videoId} />
+               <VideoPageSectionSuspense playlistId={playlistId} videoId={videoId} />
         </Suspense>
        </ErrorBoundary>
   
   );
 }
 
-export const VideoPageSectionSuspense = ({videoId}: HomeViewProps) => {
+export const VideoPageSectionSuspense = ({videoId, playlistId}: HomeViewProps) => {
  const trpc = useTRPC();
-
+const router = useRouter();
+  const searchParams = useSearchParams();
 const queryClient = useQueryClient();
   const videoQuery = useSuspenseQuery(trpc.videos.getOne.queryOptions({id: videoId}))
   const video = videoQuery.data;
-  
-  const {isSignedIn} = useAuth() 
+    const suggestionsQuery = useSuspenseInfiniteQuery(trpc.suggestions.getMany.infiniteQueryOptions(
+    {
+      videoId: videoId,
+      playlistId: playlistId,
+      limit: DEFAULT_LIMIT
+    }, {
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  }
+  ))
+ const suggestions = suggestionsQuery.data?.pages.flatMap(p => p.items) ?? [];
+  const playlist = suggestionsQuery.data?.pages[0]?.playlist;
+const {isSignedIn} = useAuth()
+  // Get current video index in playlist
+  const currentIndex = useMemo(() => {
+    if (!playlistId) return -1;
+    return suggestions.findIndex(v => v.id === videoId);
+  }, [suggestions, videoId, playlistId]);
+const nextVideo = useMemo(() => {
+    if (currentIndex === -1 || currentIndex >= suggestions.length - 1) return null;
+    return suggestions[currentIndex + 1];
+  }, [currentIndex, suggestions]);
+
+  const handlePlaylistNext = () => {
+    if (!nextVideo || !playlistId) return;
+  router.push(`/${playlistId}/${nextVideo.id}`);
+  };
+   
 
 const createViewMutation = useMutation(
     trpc.videoViews.create.mutationOptions({
@@ -95,12 +124,26 @@ const createViewMutation = useMutation(
     )}>
        <VideoPlayer
        onPlay={handleVideoPlay}
+       playlistId={playlistId}
+       currentVideoId={videoId}
+       onPlaylistNext={handlePlaylistNext}
        playbackId={video.muxPlaybakId}
        thumbnailUrl={video.thumbnailUrl}
        />
     </div>
     <VideoBanner  status={video.muxStatus} />
     <VideoTopRow  video={video} />
+    {playlistId && nextVideo && (
+        <div className="mt-4 p-3 bg-secondary/50 rounded-lg flex items-center gap-3">
+          <div className="text-sm text-muted-foreground">Up next in playlist:</div>
+          <div 
+            className="cursor-pointer hover:underline"
+            onClick={() => handlePlaylistNext()}
+          >
+            {nextVideo.title}
+          </div>
+        </div>
+      )}
       </>
   );
 }

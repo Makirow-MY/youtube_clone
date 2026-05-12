@@ -18,7 +18,7 @@ export const VideoPageView = ({videoId, playlistId}: VideoPageViewProps) => {
   
   <div className="flex flex-col lg:flex-row gap-6">
      <div className="flex-1 min-w-0">
-          <VideoPageSection videoId={videoId} />
+          <VideoPageSection playlistId={playlistId} videoId={videoId} />
           <div className="lg:hidden block mt-4">
            <SuggestionPageSection isManual={true} playlistId={playlistId} videoId={videoId} />
           </div>
