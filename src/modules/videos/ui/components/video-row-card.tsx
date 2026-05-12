@@ -10,7 +10,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import VideoMenu from "./video-menu";
 import { useMemo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight, Play } from "lucide-react";
 
 export const videoRowCardVariants = cva("flex group min-w-0", {
     variants: {
@@ -118,11 +118,11 @@ export const VideoRowCard = ({ data, index, size = "default", playlistId, videoI
     }, [data.likeCount])
 
     return (
-        <div className={videoRowCardVariants({ size }) + (playlistId && videoId === data.id ? "bg-accent cursor-pointer" : "bg-transparent cursor-pointer")}>
+        <div className={videoRowCardVariants({ size }) + (playlistId && videoId === data.id ? "bg-red-500/20 cursor-pointer" : "bg-transparent cursor-pointer")}>
            
             <div className={"flex items-center gap-1"}>
-                {playlistId && videoId === data.id && <p className="text-xs text-muted-foreground">{index}</p>}
-                {playlistId && videoId !== data.id && <ArrowBigLeft className="size-4 opacity-0" />}
+                {playlistId && videoId === data.id &&  <Play className="size-4" />}
+                {playlistId && videoId !== data.id && <p className="text-xs text-muted-foreground">{index}</p>}
                 <a href={playlistId ? `/playlist/${playlistId}/${data.id}` : `/videos/${data.id}`} className={thumbnailVariants({ size })} >
                     <VideoThumnail
                         imageUrl={data.thumbnailUrl}

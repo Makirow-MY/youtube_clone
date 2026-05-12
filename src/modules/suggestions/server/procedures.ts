@@ -2,7 +2,7 @@ import { db } from "@/db";
 import { playLists, playListsVideos, users, videos, videosReactions, videosViews, videoTags, videoTopics } from "@/db/schema";
 import { z } from "zod";
 import { createTRPCRouter, baseProcedure, protectedProcedure } from "@/trpc/init";
-import { eq, and, or, lt, desc, getTableColumns, not, sql, inArray } from "drizzle-orm";
+import { eq, and, or, lt, desc, getTableColumns, not, sql, inArray, asc } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 
 export const suggestionsRouter = createTRPCRouter({
@@ -34,6 +34,7 @@ export const suggestionsRouter = createTRPCRouter({
           db.select({
             videoId: playListsVideos.videoId,
             playlistId: playListsVideos.playListId,
+            createdAt: playListsVideos.createdAt
           }).from(playListsVideos)
             .where(
               playlistId ? eq(playListsVideos.playListId, playlistId) : undefined
@@ -91,15 +92,19 @@ const [playlistItem] = await db.select({
           )
         )
         .orderBy(
-          desc(sql`RANDOM()`),
-
-
+         playlistId 
+  ? asc(playlistAllVideos.createdAt || videos.createdAt) 
+  : desc(sql`RANDOM()`)
         )
         .limit(limit + 1);
      // console.log({ data })
       const hasMore = data.length > limit;
-      const items = hasMore ? data.slice(0, -1).sort(() => Math.random() - 0.5) : data.sort(() => Math.random() - 0.5);
+     let items = hasMore ? data.slice(0, -1) : data;
 
+      // ONLY randomize when NOT in playlist mode
+      if (!playlistId) {
+        items = items.sort(() => Math.random() - 0.5);
+      }
       const nextCursor = hasMore
         ? { id: items[items.length - 1].id, updatedAt: items[items.length - 1].updatedAt }
         : null;

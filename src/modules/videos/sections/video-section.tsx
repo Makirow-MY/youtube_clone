@@ -84,14 +84,16 @@ const queryClient = useQueryClient();
   const playlist = suggestionsQuery.data?.pages[0]?.playlist;
 const {isSignedIn} = useAuth()
   // Get current video index in playlist
-  const currentIndex = useMemo(() => {
-    if (!playlistId) return -1;
-    return suggestions.findIndex(v => v.id === videoId);
-  }, [suggestions, videoId, playlistId]);
+const currentIndex = useMemo(() => {
+  if (!playlistId || !suggestions.length) return -1;
+  
+  return suggestions.findIndex((v) => v.id === videoId);
+}, [suggestions, videoId, playlistId]);
+
 const nextVideo = useMemo(() => {
-    if (currentIndex === -1 || currentIndex >= suggestions.length - 1) return null;
-    return suggestions[currentIndex + 1];
-  }, [currentIndex, suggestions]);
+  if (currentIndex < 0 || currentIndex >= suggestions.length - 1) return null;
+  return suggestions[currentIndex + 1];
+}, [currentIndex, suggestions]);
 
   const handlePlaylistNext = () => {
     if (!nextVideo || !playlistId) return;
