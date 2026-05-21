@@ -9,12 +9,13 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { UserPageBanner } from "../components/user-banner";
 import { Skeleton } from "@/components/ui/skeleton";
-import { UserPageInfo } from "../components/user-pade-info";
-import { VideoGridCard } from "@/modules/videos/ui/components/video-grid-card";
+import { UserPageInfo, UserPageInfoSkeleton } from "../components/user-pade-info";
+import { VideoGridCard, VideoGridCardSkeleton } from "@/modules/videos/ui/components/video-grid-card";
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ShortGridCard } from "@/modules/videos/ui/components/short-grid-card";
+import { FilterCarousel } from "@/components/filter-carousel";
 
 interface PagePops{
     userId: string;
@@ -52,9 +53,21 @@ export const UserSection = ({userId}: PagePops) => {
         </div>
       )}
     >
-      <Suspense fallback={<div>
+      <Suspense fallback={
+        <div className="flex relative justify-center flex-col w-[100%] items-center gap-y-6 md:px-12 px-6">
         <Skeleton className="w-[90%] h-[200px]" />
-        </div>}>
+        <UserPageInfoSkeleton />
+        <FilterCarousel isLoading={true} onSelect={() => { }} data={[]} />
+         <div className="gap-4 gap-y-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 xl:grid-cols-3" >
+                   {
+                     Array.from({ length: 12 }).map((_, index) =>
+                     (
+                       <VideoGridCardSkeleton key={index} />
+                     ))
+                   }
+        </div>
+    </div>
+      }>
 
         <UserSectionSuspense userId={userId} />
 

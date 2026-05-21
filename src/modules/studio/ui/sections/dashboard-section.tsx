@@ -10,6 +10,7 @@ import { useTRPC } from "@/trpc/client";
 import { DEFAULT_LIMIT } from "@/constants";
 import { useQueryClient, useSuspenseInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Dummy Data (Replace with real data from your TRPC later)
 const weeklyData = [
@@ -58,7 +59,7 @@ export const DashboardSection = () => {
                 </div>
             )}
         >
-            <Suspense fallback={"loading..."}>
+            <Suspense fallback={<DashboardSectionSkeleton />}>
 
                 <DashboardSectionSuspense />
 
@@ -216,7 +217,7 @@ export function DashboardSectionSuspense() {
           <CardContent>
             <div className="space-y-4">
               {recentUploads?.map((video) => (
-                <div key={video.id} className="flex gap-4 items-center hover:bg-muted p-2 rounded-lg transition-colors">
+                <a href={`/videos/${video.id}`} key={video.id} className="flex gap-4 items-center hover:bg-muted p-2 rounded-lg transition-colors">
                   <div className="relative w-24 aspect-video rounded-md overflow-hidden">
                     <img src={video.thumbnailUrl || "/placeholder.jpg"} alt={video.title} className="object-cover" />
                   </div>
@@ -230,7 +231,7 @@ export function DashboardSectionSuspense() {
                     <p>{new Intl.NumberFormat("en", { notation: "compact" }).format(video.viewCount)} views</p>
                     <p className="text-emerald-600">{video.likeCount} likes</p>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </CardContent>
@@ -252,11 +253,15 @@ export function DashboardSectionSuspense() {
                   <div key={comment.id} className="flex gap-3">
                     <img src={comment.user.imageUrl} className="w-8 h-8 rounded-full" alt="" />
                     <div>
-                      <p className="font-medium">{comment.user.name}</p>
+                      <a href={`/users/${comment.user.clerkId}`}>
+                         <p className="font-medium">{comment.user.name}</p>
+                      </a>
                       <p className="text-muted-foreground line-clamp-2">{comment.content}</p>
-                      <p className="text-xs text-muted-foreground mt-1">
+                     <a href={`/videos/${comment.video.id}`}>
+                        <p className="text-xs text-muted-foreground mt-1">
                         on "{comment.video.title}"
                       </p>
+                     </a>
                     </div>
                   </div>
                 ))}
@@ -270,7 +275,7 @@ export function DashboardSectionSuspense() {
               </h4>
               <div className="space-y-3">
                 {recentSubscribers?.map((sub) => (
-                  <div key={sub.id} className="flex items-center gap-3">
+                  <a href={`/users/${sub.clerkId}`} key={sub.id} className="flex items-center gap-3">
                     <img src={sub.imageUrl} className="w-9 h-9 rounded-full" alt="" />
                     <div>
                       <p className="font-medium text-sm">{sub.name}</p>
@@ -278,7 +283,7 @@ export function DashboardSectionSuspense() {
                         {format(new Date(sub.subscribedAt), "dd MMM")}
                       </p>
                     </div>
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>
@@ -289,3 +294,124 @@ export function DashboardSectionSuspense() {
     )
 }
 
+
+
+export const DashboardSectionSkeleton = () => {
+    return (
+        <>
+            {/* Stats Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {Array.from({ length: 4 }).map((_, i) => (
+                    <Card key={i}>
+                        <CardHeader className="flex flex-row items-center justify-between pb-2">
+                            <Skeleton className="h-4 w-32" />
+                            <Skeleton className="h-5 w-5 rounded-full" />
+                        </CardHeader>
+                        <CardContent>
+                            <Skeleton className="h-10 w-28" />
+                        </CardContent>
+                    </Card>
+                ))}
+            </div>
+
+            {/* Charts Row */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+                {/* Performance Overview Chart */}
+                <Card>
+                    <CardHeader>
+                        <Skeleton className="h-6 w-56" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="h-[320px] w-full bg-muted/50 rounded-xl flex items-center justify-center">
+                            <Skeleton className="h-4 w-48 text-center" />
+                            {/* You can enhance this with a fake chart skeleton if desired */}
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Top Videos Bar Chart */}
+                <Card>
+                    <CardHeader>
+                        <Skeleton className="h-6 w-52" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="h-[320px] w-full bg-muted/50 rounded-xl flex items-center justify-center">
+                            <Skeleton className="h-4 w-52 text-center" />
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            {/* Recent Uploads + Activity Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+                {/* Recent Uploads */}
+                <Card className="lg:col-span-2">
+                    <CardHeader>
+                        <Skeleton className="h-6 w-40" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-5">
+                            {Array.from({ length: 4 }).map((_, i) => (
+                                <div key={i} className="flex gap-4">
+                                    {/* Thumbnail */}
+                                    <Skeleton className="w-24 aspect-video rounded-md" />
+                                    
+                                    <div className="flex-1 space-y-2">
+                                        <Skeleton className="h-5 w-full max-w-md" />
+                                        <Skeleton className="h-4 w-40" />
+                                    </div>
+
+                                    <div className="text-right space-y-2">
+                                        <Skeleton className="h-4 w-20 ml-auto" />
+                                        <Skeleton className="h-4 w-16 ml-auto" />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Recent Activity Sidebar */}
+                <Card>
+                    <CardHeader>
+                        <Skeleton className="h-6 w-36" />
+                    </CardHeader>
+                    <CardContent className="space-y-8">
+                        {/* Recent Comments */}
+                        <div>
+                            <Skeleton className="h-5 w-40 mb-4" />
+                            <div className="space-y-5">
+                                {Array.from({ length: 3 }).map((_, i) => (
+                                    <div key={i} className="flex gap-3">
+                                        <Skeleton className="w-8 h-8 rounded-full" />
+                                        <div className="flex-1 space-y-2">
+                                            <Skeleton className="h-4 w-28" />
+                                            <Skeleton className="h-4 w-full" />
+                                            <Skeleton className="h-3 w-32" />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* New Subscribers */}
+                        <div>
+                            <Skeleton className="h-5 w-40 mb-4" />
+                            <div className="space-y-4">
+                                {Array.from({ length: 3 }).map((_, i) => (
+                                    <div key={i} className="flex items-center gap-3">
+                                        <Skeleton className="w-9 h-9 rounded-full" />
+                                        <div className="space-y-1">
+                                            <Skeleton className="h-4 w-32" />
+                                            <Skeleton className="h-3 w-20" />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+        </>
+    );
+};

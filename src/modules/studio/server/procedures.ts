@@ -219,6 +219,7 @@ getRecentComments: protectedProcedure
         user: {
           name: users.name,
           imageUrl: users.imageUrl,
+          clerkId: users.clerkId,
         },
       })
       .from(comments)
@@ -240,6 +241,7 @@ getRecentSubscribers: protectedProcedure
         id: users.id,
         name: users.name,
         imageUrl: users.imageUrl,
+        clerkId: users.clerkId,
         subscribedAt: Subscriptions.createdAt,
       })
       .from(Subscriptions)
