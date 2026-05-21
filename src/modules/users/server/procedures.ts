@@ -87,7 +87,7 @@ getOne: baseProcedure
                    .leftJoin(viewerSubscription, eq(viewerSubscription.creatorId, users.id))
                    .where(and(
                        eq(videos.userId, userData.id),
-                       eq(videos.videoVisibility, 'public'),
+                     userId !== clerkUserId ?  eq(videos.videoVisibility, 'public') : undefined,
                    ))
 
 
