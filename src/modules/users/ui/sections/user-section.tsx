@@ -217,7 +217,7 @@ const myInfo = query.data;
     
     </div>}
 
-                    { videos && cat === true && <div className="flex gap-4 overflow-x-auto pb-3 px-1">
+                    { videos && cat === true && <div className="flex items-center justify-start w-full gap-4 overflow-x-auto pb-3 px-1">
                               {videos.filter((short) => short.videoType === "short").map((short) => (
                                 <div key={short.id} className="flex-shrink-0 w-44">
                                   <ShortsGridCard data={short} />
