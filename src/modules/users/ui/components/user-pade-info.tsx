@@ -96,13 +96,8 @@ export const UserPageInfoSkeleton = () => {
             <div className="flex items-start flex-col">
                 {/* Avatar + Info Row */}
                 <div className="flex items-center gap-3">
-                    {/* Avatar Skeleton */}
-                    <UserAvatar 
-                        size={isMobile ? 'lg' : "xl"}
-                        imageUrl={""}
-                        name=""
-                        className="opacity-50"
-                    />
+                   
+                   {isMobile ? <Skeleton className="h-10 w-10 rounded-full" />: <Skeleton className="h-[160px] w-[160px] rounded-full" /> }
 
                     {/* Info Section */}
                     <div className="flex-1 min-w-0 space-y-3">
