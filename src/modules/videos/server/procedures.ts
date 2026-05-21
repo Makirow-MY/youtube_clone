@@ -426,12 +426,6 @@ export const videosRouter = createTRPCRouter({
                         subscriberCount: db.$count(Subscriptions, eq(Subscriptions.creatorId, users.id)),
                         viewerSubscribed: isNotNull(viewerSubscription.viewerId).mapWith(Boolean)
                     },
-                    videoTopic: {
-                        ...getTableColumns(videoTopics),
-                    },
-                    videoTag: {
-                        ...getTableColumns(videoTags),
-                    },
                     playlistId: sql<string>`NULL`,
                     viewCount: viewCountSub,
                     likeCount: db.$count(videosReactions,
@@ -448,8 +442,6 @@ export const videosRouter = createTRPCRouter({
 
                 }).from(videos)
                 .innerJoin(users, eq(videos.userId, users.id))
-                .innerJoin(videoTopics, eq(videoTopics.videoId, videos.id))
-                .innerJoin(videoTags, eq(videoTags.videoId, videos.id))
                 .leftJoin(viewerReactions, eq(viewerReactions.videoId, videos.id))
                 .leftJoin(viewerSubscription, eq(viewerSubscription.creatorId, users.id))
                 .where(and(

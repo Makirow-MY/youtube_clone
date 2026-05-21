@@ -127,6 +127,8 @@ export const videoRelations = relations(videos, ({ one, many }) => ({
     playListsVideos: many(playListsVideos),
     reactions: many(videosReactions),
     comments: many(comments),
+    tags: many(videoTags),
+    topics: many(videoTopics),
 }));
 
 const videosViews = pgTable("videos_views", {
@@ -360,9 +362,6 @@ export const videoTopics = pgTable("video_topics", {
     index("topic_name_idx").on(t.topicName)
 ])
 
-export const categoriesRelations = relations(videoTopics, ({ many }) => ({
-    videos: many(videos),
-}));
 // Audience Segments - derived from who watches what
 export const audienceSegments = pgTable("audience_segments", {
     id: uuid("id").primaryKey().defaultRandom(),
@@ -394,5 +393,19 @@ export const userTopicPreferences = pgTable("user_topic_preferences", {
     primaryKey({ columns: [t.userId, t.topicName] }),
     index("user_topic_idx").on(t.userId, t.topicName)
 ])
+
+export const videoTopicRelations = relations(videoTopics, ({ one }) => ({
+    video: one(videos, {
+        fields: [videoTopics.videoId],
+        references: [videos.id],
+    }),
+}));
+
+export const videoTagRelations = relations(videoTags, ({ one }) => ({
+    video: one(videos, {
+        fields: [videoTags.videoId],
+        references: [videos.id],
+    }),
+}));
 
 export { users, playListsVideos, videos, playLists, comments, commentsReactions, videoVisibility, videosViews, videosReactions, Subscriptions };

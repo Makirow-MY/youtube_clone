@@ -190,18 +190,7 @@ const myInfo = query.data;
                  </div> }
           
 { videos && cat === null && <div>
-        {
-        videos.filter((short) => short.videoType === "short").length > 0 && 
-        <>
-         <div className="flex gap-4 overflow-x-auto pb-3 px-1">
-          {videos.filter((short) => short.videoType === "short").map((short) => (
-            <div key={short.id} className="flex-shrink-0 w-44">
-              <ShortsGridCard data={short} />
-            </div>
-          ))}
-        </div>
-        </>
-      }
+       
       {videos.filter((short) => short.videoType === "video").length > 0 &&
 <>
        <div className="gap-4 gap-y-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 xl:grid-cols-3" >
@@ -214,7 +203,18 @@ const myInfo = query.data;
         </div>
         </>
       }
-    
+     {
+        videos.filter((short) => short.videoType === "short").length > 0 && 
+        <>
+         <div className="flex gap-4 overflow-x-auto pb-3 px-1">
+          {videos.filter((short) => short.videoType === "short").map((short) => (
+            <div key={short.id} className="flex-shrink-0 w-44">
+              <ShortsGridCard data={short} />
+            </div>
+          ))}
+        </div>
+        </>
+      }
     </div>}
 
                     { videos && cat === true && <div className="flex items-center justify-start w-full gap-4 overflow-x-auto pb-3 px-1">
