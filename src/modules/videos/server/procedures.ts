@@ -56,7 +56,33 @@ export const videosRouter = createTRPCRouter({
                 ))
 
                 
-             if(!ExistingVideo.previewKey && !ExistingVideo.thumbnailKey){
+             if(!ExistingVideo.previewKey || !ExistingVideo.thumbnailKey){
+
+                
+                if (ExistingVideo.thumbnailKey) {
+                    const utapi = new UTApi();
+
+                    await utapi.deleteFiles(ExistingVideo.thumbnailKey);
+                    await db.update(videos).set({
+                        thumbnailUrl: null,
+                        thumbnailKey: null,
+                    }).where(and(
+                        eq(videos.id, input.id),
+                        eq(videos.userId, userId),
+                    ))
+                }
+                  if (ExistingVideo.previewKey) {
+                    const utapi = new UTApi();
+
+                    await utapi.deleteFiles(ExistingVideo.previewKey);
+                    await db.update(videos).set({
+                        previewUrl: null,
+                        previewKey: null,
+                    }).where(and(
+                        eq(videos.id, input.id),
+                        eq(videos.userId, userId),
+                    ))
+                }
 
                 const tempThumbnailUrl = `https://image.mux.com/${assets.playback_ids?.[0]?.id}/thumbnail.jpg`
                 const tempPreviewUrl = `https://image.mux.com/${assets.playback_ids?.[0]?.id}/animated.gif`
@@ -87,7 +113,7 @@ export const videosRouter = createTRPCRouter({
                     )).returning();
 
                 }
-                
+
 
                 const [updateVid] = await db.update(videos).set({
                     muxStatus: assets.status,
