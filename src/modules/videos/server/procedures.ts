@@ -388,6 +388,12 @@ export const videosRouter = createTRPCRouter({
             const videoType = input.videoType;
 
             let userId;
+      
+            if (!videoId) {
+                throw new TRPCError({ code: "BAD_REQUEST", message: "Video ID is required" });
+
+            }
+
 
             const [user] = await db.select().from(users).where(inArray(users.clerkId, clerkUserId ? [clerkUserId] : []))
 
@@ -447,13 +453,11 @@ export const videosRouter = createTRPCRouter({
                 .leftJoin(viewerReactions, eq(viewerReactions.videoId, videos.id))
                 .leftJoin(viewerSubscription, eq(viewerSubscription.creatorId, users.id))
                 .where(and(
-                    input.id ? eq(videos.id, input.id) : undefined,
-                    // eq(videos.videoVisibility, 'public'),
-                    videoType ? eq(videos.videoType, videoType) : undefined
-                ))
+                   eq(videos.id, videoId),
+                 ))
 
             if (!existingVid) {
-                throw new TRPCError({ code: "NOT_FOUND", message: "Missing User Id, Try Signing In Again" });
+                throw new TRPCError({ code: "NOT_FOUND", message: "Existing video not found" });
 
             }
             return existingVid;
