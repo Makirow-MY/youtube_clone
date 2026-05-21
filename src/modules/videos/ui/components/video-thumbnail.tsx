@@ -25,12 +25,12 @@ export const VideoThumnail = ({imageUrl, isChange = false, isShort, duration, pr
                 <div  className={`relative  bg-black/50 overflow-hidden rounded-xl w-full ${!isChange ? "aspect-video " : "aspect-[3/4]"}`}>
                     <Image loading="lazy"
                      fill 
-                     className={` size-full ${!isShort ? "object-cover " : isChange && "object-fill" } group-hover:opacity-0`} alt={title} src={imageUrl ? imageUrl :THUMBNAIL_FALLBACK} />
+                     className={` size-full ${!isShort ? "object-cover " : isChange ? "object-fill" : "object-contain"} group-hover:opacity-0`} alt={title} src={imageUrl ? imageUrl :THUMBNAIL_FALLBACK} />
               
               <Image loading="lazy"
               unoptimized={!!previewUrl}
                      fill 
-                     className={` ${!isShort ? "object-cover "  : isChange && "object-fill"} size-full opacity-0 group-hover:opacity-100`} alt={title} src={previewUrl ? previewUrl :THUMBNAIL_FALLBACK} />
+                     className={` ${!isShort ? "object-cover "  : isChange ? "object-fill" : "object-contain"} size-full opacity-0 group-hover:opacity-100`} alt={title} src={previewUrl ? previewUrl :THUMBNAIL_FALLBACK} />
               
                 </div>
 

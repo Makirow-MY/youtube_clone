@@ -9,6 +9,9 @@ import { formatDistanceToNow } from "date-fns";
 import { ZapIcon } from "lucide-react";
 import { VideoGetManyOutput } from "@/modules/videos/types";
 import { VideoThumnail } from "@/modules/videos/ui/components/video-thumbnail";
+import Image from "next/image";
+import { THUMBNAIL_FALLBACK } from "@/modules/videos/constants";
+import { formatDuration } from "@/lib/utils";
 
 interface ShortsGridCardProps {
   data: any; // VideoGetManyOutput["items"][number];
@@ -21,14 +24,25 @@ export const ShortsGridCard = ({ data }: ShortsGridCardProps) => {
     <div className="flex flex-col w-full gap-2 group">
       <a href={`/shorts/${data.id}`}>
         <div className="relative ">
-          <VideoThumnail
-            imageUrl={data.thumbnailUrl}
-            previewUrl={data.previewUrl}
-            title={data.title}
-            duration={data.duration ?? 0}
-            isShort={true}
-            isChange={true}
-          />
+          
+               <div className="relative group">
+                          <div  className={`relative  bg-black/50 overflow-hidden rounded-xl w-full aspect-[3/4]`}>
+                              <Image loading="lazy"
+                               fill 
+                               className={` size-full object-fill  group-hover:opacity-0`} alt={data.title} src={data.thumbnailUrl ? data.thumbnailUrl :THUMBNAIL_FALLBACK} />
+                        
+                        <Image loading="lazy"
+                        unoptimized={!!data.previewUrl}
+                               fill 
+                               className={` object-fill size-full opacity-0 group-hover:opacity-100`} alt={data.title} src={data.previewUrl ? data.previewUrl :THUMBNAIL_FALLBACK} />
+                        
+                          </div>
+          
+                          <div className="absolute bottom-2 right-2 px-1 py-0.5 rounded bg-black/80 text-white text-xs font-medium">
+                          {formatDuration(data.duration ?? 0)}
+                          </div>
+                  </div>
+
         
         </div>
       </a>
