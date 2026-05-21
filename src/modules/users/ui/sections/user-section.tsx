@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ShortGridCard } from "@/modules/videos/ui/components/short-grid-card";
 import { FilterCarousel } from "@/components/filter-carousel";
+import { ShortsGridCard } from "@/modules/home/components/shorts-grid";
 
 interface PagePops{
     userId: string;
@@ -179,26 +180,50 @@ const myInfo = query.data;
                                      </Carousel>
                                   
                                    </div>
-             <div className="w-full gap-4 gap-y-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 xl:grid-cols-3" >
+            { videos && cat === false && <div className="w-full gap-4 gap-y-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 xl:grid-cols-3" >
                       {
-                        videos && cat === false && videos.filter((short) => short.videoType === "video").map((video) =>
+                         videos.filter((short) => short.videoType === "video").map((video) =>
                         (
                           <VideoGridCard key={video.id} data={video} />
                         ))
                       }
-                      {
-                        videos && cat === true && videos.filter((short) => short.videoType === "short").map((video) =>
-                        (
-                          <ShortGridCard key={video.id} data={video} />
-                        ))
-                      }
-                      {
-                        videos && cat === null && videos.map((video) =>
-                        (
-                          <VideoGridCard key={video.id} data={video} />
-                        ))
-                      }
-                    </div>
+                 </div> }
+          
+{ videos && cat === null && <div>
+        {
+        videos.filter((short) => short.videoType === "short").length > 0 && 
+        <>
+         <div className="flex gap-4 overflow-x-auto pb-3 px-1">
+          {videos.filter((short) => short.videoType === "short").map((short) => (
+            <div key={short.id} className="flex-shrink-0 w-44">
+              <ShortsGridCard data={short} />
+            </div>
+          ))}
+        </div>
+        </>
+      }
+      {videos.filter((short) => short.videoType === "video").length > 0 &&
+<>
+       <div className="gap-4 gap-y-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 xl:grid-cols-3" >
+          {
+            videos.filter((video) => video.videoType === "video").map((video) =>
+            (
+              <VideoGridCard key={video.id} data={video} />
+            ))
+          }
+        </div>
+        </>
+      }
+    
+    </div>}
+
+                    { videos && cat === true && <div className="flex gap-4 overflow-x-auto pb-3 px-1">
+                              {videos.filter((short) => short.videoType === "short").map((short) => (
+                                <div key={short.id} className="flex-shrink-0 w-44">
+                                  <ShortsGridCard data={short} />
+                                </div>
+                              ))}
+                  </div>}
         </div>    
     )
 }
