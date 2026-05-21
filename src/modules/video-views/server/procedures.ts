@@ -6,7 +6,7 @@ import { eq, and, or, lt, desc, getTableColumns, exists, isNotNull, inArray } fr
 import { TRPCError } from "@trpc/server";
 import { mux } from "@/lib/mux";
 import { UploadThingError, UTApi } from "uploadthing/server";
-import { AudienceAnalysisService } from "@/lib/ai-tagging";
+import { AudienceAnalysisService, VideoTaggingService } from "@/lib/ai-tagging";
 
 export const videosViewsRouter = createTRPCRouter({
 
@@ -45,14 +45,27 @@ export const videosViewsRouter = createTRPCRouter({
                 }
 
 
-                 const videoTopicsData = await db.select().from(videoTopics).where(
+                 const videoTopicsData1 = await db.select().from(videoTopics).where(
                     eq(videoTopics.videoId, videoId)
                 );
 
-                  if (videoTopicsData.length === 0) {
-                    throw new TRPCError({ code: "NOT_FOUND", message: "Video topics not found" });
-                 
-                }
+                  if (videoTopicsData1.length === 0) {
+                    const taggingService = new VideoTaggingService();
+                                const { tags, topics } = await taggingService.extractTagsFromMetadata(
+                                    exitingVideo.title,
+                                    exitingVideo.description || ""
+                                );
+                    
+                                const MyTopic = topics.slice(0, 4)
+                                const MyTag = tags.slice(0, 4)
+                                // Save tags and topics
+                                await taggingService.saveTags(videoId, MyTag);
+                                await taggingService.saveTopics(videoId, MyTopic);
+       }
+       
+          const videoTopicsData = await db.select().from(videoTopics).where(
+                    eq(videoTopics.videoId, videoId)
+                );
 
                  let affinityBoost =  0.23;
               //  if (likedNum > 0) affinityBoost += 0.2;

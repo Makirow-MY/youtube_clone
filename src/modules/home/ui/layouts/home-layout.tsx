@@ -13,7 +13,7 @@ export  async function HomeLayout({children} : HomeLayoutProps) {
       prefetch(trpc.subscription.getMany.queryOptions()),
        ]);
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider defaultOpen={false}>
         <div className="w-full ">
             <HomeNavbar />
             <div className="pt-16 min-h-screen flex relative">

@@ -55,6 +55,40 @@ export const videosRouter = createTRPCRouter({
                     eq(videos.userId, userId),
                 ))
 
+                
+             if(!ExistingVideo.previewKey && !ExistingVideo.thumbnailKey){
+
+                const tempThumbnailUrl = `https://image.mux.com/${assets.playback_ids?.[0]?.id}/thumbnail.jpg`
+                const tempPreviewUrl = `https://image.mux.com/${assets.playback_ids?.[0]?.id}/animated.gif`
+
+                const utapi = new UTApi()
+                const UPthumbnailUrl = await utapi.uploadFilesFromUrl(tempThumbnailUrl)
+                const UPpreviewUrl = await utapi.uploadFilesFromUrl(tempPreviewUrl)
+
+                if (!UPthumbnailUrl.data) {
+                    throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" })
+                }
+                 if (!UPpreviewUrl.data) {
+                    throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" })
+                 }
+
+                const { key: thumbnailKey, ufsUrl: thumbnailUrl } = UPthumbnailUrl.data
+
+               const {key: previewKey, ufsUrl: previewUrl } = UPpreviewUrl.data
+
+                     await db.update(videos).set({ 
+                    thumbnailUrl: thumbnailUrl ?? tempThumbnailUrl, 
+                    thumbnailKey, 
+                    previewUrl: previewUrl ?? tempPreviewUrl, 
+                    previewKey })
+                    .where(and(
+                        eq(videos.id, input.id),
+                        eq(videos.userId, userId),
+                    )).returning();
+
+                }
+                
+
                 const [updateVid] = await db.update(videos).set({
                     muxStatus: assets.status,
                     muxPlaybakId: assets.playback_ids?.[0]?.id,
