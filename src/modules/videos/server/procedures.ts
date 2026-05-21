@@ -105,25 +105,46 @@ export const videosRouter = createTRPCRouter({
                         eq(videos.userId, userId),
                     ))
                 }
+                  if (ExistingVideo.previewKey) {
+                    const utapi = new UTApi();
+
+                    await utapi.deleteFiles(ExistingVideo.previewKey);
+                    await db.update(videos).set({
+                        previewUrl: null,
+                        previewKey: null,
+                    }).where(and(
+                        eq(videos.id, input.id),
+                        eq(videos.userId, userId),
+                    ))
+                }
 
                 if (!ExistingVideo.muxPlaybakId) {
                     throw new TRPCError({ code: "BAD_REQUEST" })
                 }
 
                 const tempThumbnailUrl = `https://image.mux.com/${ExistingVideo.muxPlaybakId}/thumbnail.jpg`
+                const tempPreviewUrl = `https://image.mux.com/${ExistingVideo.muxPlaybakId}/animated.gif`
 
                 const utapi = new UTApi()
                 const UPthumbnailUrl = await utapi.uploadFilesFromUrl(tempThumbnailUrl)
+                const UPpreviewUrl = await utapi.uploadFilesFromUrl(tempPreviewUrl)
 
                 if (!UPthumbnailUrl.data) {
                     throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" })
                 }
+                 if (!UPpreviewUrl.data) {
+                    throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" })
+                 }
 
                 const { key: thumbnailKey, ufsUrl: thumbnailUrl } = UPthumbnailUrl.data
 
+               const {key: previewKey, ufsUrl: previewUrl } = UPpreviewUrl.data
 
-
-                const [UpdateVideo] = await db.update(videos).set({ thumbnailUrl, thumbnailKey })
+                const [UpdateVideo] = await db.update(videos).set({ 
+                    thumbnailUrl: thumbnailUrl ?? tempThumbnailUrl, 
+                    thumbnailKey, 
+                    previewUrl: previewUrl ?? tempPreviewUrl, 
+                    previewKey })
                     .where(and(
                         eq(videos.id, input.id),
                         eq(videos.userId, userId),

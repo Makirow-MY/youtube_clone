@@ -633,9 +633,9 @@ export function FormSectionSuspense({ videoId }: FormProps) {
                                     <div>
                                         <p className="text-sm text-muted-foreground mb-1">Video link</p>
                                         <div className="flex items-center gap-2">
-                                            <p className="text-sm text-blue-500 truncate flex-1">
+                                            <a href={`/videos/${video.id}`} className="text-sm cursor-pointer text-blue-500 truncate flex-1">
                                                 {fullUrl}
-                                            </p>
+                                            </a>
                                             <Button type="button" variant="ghost" size="sm" onClick={onCopy}>
                                                 <CopyIcon className="h-4 w-4" />
                                             </Button>
